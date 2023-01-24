@@ -22,11 +22,6 @@ public interface Expression {
         FilterPath,
         CommaPath,
         RpFilter,
-        CompareFilter,
-        ConditionFilter,
-        ParaFilter,
-        LogicFilter,
-        NotFilter,
         DoubleRp,
         SingleRp,
         AttTagRp,
@@ -34,7 +29,10 @@ public interface Expression {
         FilterRp,
         ParameterFilter,
         SingleFilter,
-        DoubleFilter;
+        DoubleFilter,
+        ConstantFilter,
+        LogicFilter,
+        NotFilter;
     }
 
     List<Node> search (List<Node> input) throws Exception;

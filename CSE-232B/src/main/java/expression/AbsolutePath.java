@@ -68,5 +68,4 @@ public class AbsolutePath implements Expression {
     public ExpressionKind getExpressionKind() {
         return ExpressionKind.ap;
     }
-
 }

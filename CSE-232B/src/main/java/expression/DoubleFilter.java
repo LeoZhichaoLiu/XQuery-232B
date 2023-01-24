@@ -29,10 +29,32 @@ public class DoubleFilter implements Expression {
         List<Node> res = new ArrayList<>();
 
         if (cp == Compare.EQ_N || cp == Compare.EQ) {
-
+            for (Node node : input) {
+                List<Node> f1 = rp1.search(Arrays.asList(node));
+                List<Node> f2 = rp2.search(Arrays.asList(node));
+                boolean isEq = false;
+                for (Node n1 : f1) {
+                    for (Node n2 : f2) {
+                        if (n1.isEqualNode(n2))
+                            isEq = true;
+                    }
+                }
+                if (isEq) res.add(node);
+            }
 
         } else if (cp == Compare.IS_N || cp == Compare.IS) {
-
+            for (Node node : input) {
+                List<Node> f1 = rp1.search(Arrays.asList(node));
+                List<Node> f2 = rp2.search(Arrays.asList(node));
+                boolean isEq = false;
+                for (Node n1 : f1) {
+                    for (Node n2 : f2) {
+                        if (n1.isSameNode(n2))
+                            isEq = true;
+                    }
+                }
+                if (isEq) res.add(node);
+            }
 
         } else {
             throw new Exception ("Compare has issue");
