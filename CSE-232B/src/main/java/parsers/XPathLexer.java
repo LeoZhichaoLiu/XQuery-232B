@@ -1,6 +1,6 @@
 // Generated from java-escape by ANTLR 4.11.1
 
-package cse232b.parsers;
+package parsers;
 
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;

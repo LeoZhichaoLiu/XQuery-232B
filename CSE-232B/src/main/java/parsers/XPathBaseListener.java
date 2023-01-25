@@ -1,7 +1,6 @@
 // Generated from java-escape by ANTLR 4.11.1
 
-package cse232b.parsers;
-
+package parsers;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -43,13 +42,13 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFilterPath(XPathParser.FilterPathContext ctx) { }
+	@Override public void enterParaRp(XPathParser.ParaRpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFilterPath(XPathParser.FilterPathContext ctx) { }
+	@Override public void exitParaRp(XPathParser.ParaRpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -79,25 +78,25 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDescendant(XPathParser.DescendantContext ctx) { }
+	@Override public void enterSlashRp(XPathParser.SlashRpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDescendant(XPathParser.DescendantContext ctx) { }
+	@Override public void exitSlashRp(XPathParser.SlashRpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCommaPath(XPathParser.CommaPathContext ctx) { }
+	@Override public void enterFilterRp(XPathParser.FilterRpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCommaPath(XPathParser.CommaPathContext ctx) { }
+	@Override public void exitFilterRp(XPathParser.FilterRpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -110,18 +109,6 @@ public class XPathBaseListener implements XPathListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitText(XPathParser.TextContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterParaPath(XPathParser.ParaPathContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitParaPath(XPathParser.ParaPathContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -146,6 +133,18 @@ public class XPathBaseListener implements XPathListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCurrent(XPathParser.CurrentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCommaRp(XPathParser.CommaRpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCommaRp(XPathParser.CommaRpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -187,13 +186,13 @@ public class XPathBaseListener implements XPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterConditionFlter(XPathParser.ConditionFlterContext ctx) { }
+	@Override public void enterConstantFilter(XPathParser.ConstantFilterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitConditionFlter(XPathParser.ConditionFlterContext ctx) { }
+	@Override public void exitConstantFilter(XPathParser.ConstantFilterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

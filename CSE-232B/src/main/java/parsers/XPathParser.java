@@ -1,6 +1,6 @@
 // Generated from java-escape by ANTLR 4.11.1
 
-package cse232b.parsers;
+package parsers;
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -185,27 +185,24 @@ public class XPathParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class FilterPathContext extends RpContext {
+	public static class ParaRpContext extends RpContext {
+		public TerminalNode LPR() { return getToken(XPathParser.LPR, 0); }
 		public RpContext rp() {
 			return getRuleContext(RpContext.class,0);
 		}
-		public TerminalNode LSB() { return getToken(XPathParser.LSB, 0); }
-		public FContext f() {
-			return getRuleContext(FContext.class,0);
-		}
-		public TerminalNode RSB() { return getToken(XPathParser.RSB, 0); }
-		public FilterPathContext(RpContext ctx) { copyFrom(ctx); }
+		public TerminalNode RPR() { return getToken(XPathParser.RPR, 0); }
+		public ParaRpContext(RpContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof XPathListener ) ((XPathListener)listener).enterFilterPath(this);
+			if ( listener instanceof XPathListener ) ((XPathListener)listener).enterParaRp(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitFilterPath(this);
+			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitParaRp(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitFilterPath(this);
+			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitParaRp(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -248,7 +245,7 @@ public class XPathParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class DescendantContext extends RpContext {
+	public static class SlashRpContext extends RpContext {
 		public List<RpContext> rp() {
 			return getRuleContexts(RpContext.class);
 		}
@@ -258,42 +255,43 @@ public class XPathParser extends Parser {
 		public SlashContext slash() {
 			return getRuleContext(SlashContext.class,0);
 		}
-		public DescendantContext(RpContext ctx) { copyFrom(ctx); }
+		public SlashRpContext(RpContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof XPathListener ) ((XPathListener)listener).enterDescendant(this);
+			if ( listener instanceof XPathListener ) ((XPathListener)listener).enterSlashRp(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitDescendant(this);
+			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitSlashRp(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitDescendant(this);
+			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitSlashRp(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class CommaPathContext extends RpContext {
-		public List<RpContext> rp() {
-			return getRuleContexts(RpContext.class);
+	public static class FilterRpContext extends RpContext {
+		public RpContext rp() {
+			return getRuleContext(RpContext.class,0);
 		}
-		public RpContext rp(int i) {
-			return getRuleContext(RpContext.class,i);
+		public TerminalNode LSB() { return getToken(XPathParser.LSB, 0); }
+		public FContext f() {
+			return getRuleContext(FContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(XPathParser.COMMA, 0); }
-		public CommaPathContext(RpContext ctx) { copyFrom(ctx); }
+		public TerminalNode RSB() { return getToken(XPathParser.RSB, 0); }
+		public FilterRpContext(RpContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof XPathListener ) ((XPathListener)listener).enterCommaPath(this);
+			if ( listener instanceof XPathListener ) ((XPathListener)listener).enterFilterRp(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitCommaPath(this);
+			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitFilterRp(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitCommaPath(this);
+			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitFilterRp(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -312,28 +310,6 @@ public class XPathParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitText(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ParaPathContext extends RpContext {
-		public TerminalNode LPR() { return getToken(XPathParser.LPR, 0); }
-		public RpContext rp() {
-			return getRuleContext(RpContext.class,0);
-		}
-		public TerminalNode RPR() { return getToken(XPathParser.RPR, 0); }
-		public ParaPathContext(RpContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof XPathListener ) ((XPathListener)listener).enterParaPath(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitParaPath(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitParaPath(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -372,6 +348,30 @@ public class XPathParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitCurrent(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class CommaRpContext extends RpContext {
+		public List<RpContext> rp() {
+			return getRuleContexts(RpContext.class);
+		}
+		public RpContext rp(int i) {
+			return getRuleContext(RpContext.class,i);
+		}
+		public TerminalNode COMMA() { return getToken(XPathParser.COMMA, 0); }
+		public CommaRpContext(RpContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof XPathListener ) ((XPathListener)listener).enterCommaRp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitCommaRp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitCommaRp(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -451,7 +451,7 @@ public class XPathParser extends Parser {
 				break;
 			case LPR:
 				{
-				_localctx = new ParaPathContext(_localctx);
+				_localctx = new ParaRpContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(31);
@@ -479,7 +479,7 @@ public class XPathParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 					case 1:
 						{
-						_localctx = new DescendantContext(new RpContext(_parentctx, _parentState));
+						_localctx = new SlashRpContext(new RpContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_rp);
 						setState(37);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
@@ -491,7 +491,7 @@ public class XPathParser extends Parser {
 						break;
 					case 2:
 						{
-						_localctx = new CommaPathContext(new RpContext(_parentctx, _parentState));
+						_localctx = new CommaRpContext(new RpContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_rp);
 						setState(41);
 						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
@@ -503,7 +503,7 @@ public class XPathParser extends Parser {
 						break;
 					case 3:
 						{
-						_localctx = new FilterPathContext(new RpContext(_parentctx, _parentState));
+						_localctx = new FilterRpContext(new RpContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_rp);
 						setState(44);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
@@ -621,7 +621,7 @@ public class XPathParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class ConditionFlterContext extends FContext {
+	public static class ConstantFilterContext extends FContext {
 		public RpContext rp() {
 			return getRuleContext(RpContext.class,0);
 		}
@@ -629,18 +629,18 @@ public class XPathParser extends Parser {
 		public StringConstantContext stringConstant() {
 			return getRuleContext(StringConstantContext.class,0);
 		}
-		public ConditionFlterContext(FContext ctx) { copyFrom(ctx); }
+		public ConstantFilterContext(FContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof XPathListener ) ((XPathListener)listener).enterConditionFlter(this);
+			if ( listener instanceof XPathListener ) ((XPathListener)listener).enterConstantFilter(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitConditionFlter(this);
+			if ( listener instanceof XPathListener ) ((XPathListener)listener).exitConstantFilter(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitConditionFlter(this);
+			if ( visitor instanceof XPathVisitor ) return ((XPathVisitor<? extends T>)visitor).visitConstantFilter(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -730,7 +730,7 @@ public class XPathParser extends Parser {
 				break;
 			case 3:
 				{
-				_localctx = new ConditionFlterContext(_localctx);
+				_localctx = new ConstantFilterContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(60);

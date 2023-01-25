@@ -1,6 +1,6 @@
 // Generated from java-escape by ANTLR 4.11.1
 
-package cse232b.parsers;
+package parsers;
 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -26,12 +26,12 @@ public interface XPathVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAll(XPathParser.AllContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code FilterPath}
+	 * Visit a parse tree produced by the {@code ParaRp}
 	 * labeled alternative in {@link XPathParser#rp}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFilterPath(XPathParser.FilterPathContext ctx);
+	T visitParaRp(XPathParser.ParaRpContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Parent}
 	 * labeled alternative in {@link XPathParser#rp}.
@@ -47,19 +47,19 @@ public interface XPathVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAttribute(XPathParser.AttributeContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Descendant}
+	 * Visit a parse tree produced by the {@code SlashRp}
 	 * labeled alternative in {@link XPathParser#rp}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDescendant(XPathParser.DescendantContext ctx);
+	T visitSlashRp(XPathParser.SlashRpContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code CommaPath}
+	 * Visit a parse tree produced by the {@code FilterRp}
 	 * labeled alternative in {@link XPathParser#rp}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCommaPath(XPathParser.CommaPathContext ctx);
+	T visitFilterRp(XPathParser.FilterRpContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Text}
 	 * labeled alternative in {@link XPathParser#rp}.
@@ -67,13 +67,6 @@ public interface XPathVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitText(XPathParser.TextContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ParaPath}
-	 * labeled alternative in {@link XPathParser#rp}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitParaPath(XPathParser.ParaPathContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Tag}
 	 * labeled alternative in {@link XPathParser#rp}.
@@ -88,6 +81,13 @@ public interface XPathVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitCurrent(XPathParser.CurrentContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code CommaRp}
+	 * labeled alternative in {@link XPathParser#rp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCommaRp(XPathParser.CommaRpContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code LogicFilter}
 	 * labeled alternative in {@link XPathParser#f}.
@@ -110,12 +110,12 @@ public interface XPathVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNotFilter(XPathParser.NotFilterContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ConditionFlter}
+	 * Visit a parse tree produced by the {@code ConstantFilter}
 	 * labeled alternative in {@link XPathParser#f}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitConditionFlter(XPathParser.ConditionFlterContext ctx);
+	T visitConstantFilter(XPathParser.ConstantFilterContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ParaFilter}
 	 * labeled alternative in {@link XPathParser#f}.

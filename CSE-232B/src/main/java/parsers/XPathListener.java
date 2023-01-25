@@ -1,6 +1,6 @@
 // Generated from java-escape by ANTLR 4.11.1
 
-package cse232b.parsers;
+package parsers;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -32,17 +32,17 @@ public interface XPathListener extends ParseTreeListener {
 	 */
 	void exitAll(XPathParser.AllContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code FilterPath}
+	 * Enter a parse tree produced by the {@code ParaRp}
 	 * labeled alternative in {@link XPathParser#rp}.
 	 * @param ctx the parse tree
 	 */
-	void enterFilterPath(XPathParser.FilterPathContext ctx);
+	void enterParaRp(XPathParser.ParaRpContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code FilterPath}
+	 * Exit a parse tree produced by the {@code ParaRp}
 	 * labeled alternative in {@link XPathParser#rp}.
 	 * @param ctx the parse tree
 	 */
-	void exitFilterPath(XPathParser.FilterPathContext ctx);
+	void exitParaRp(XPathParser.ParaRpContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Parent}
 	 * labeled alternative in {@link XPathParser#rp}.
@@ -68,29 +68,29 @@ public interface XPathListener extends ParseTreeListener {
 	 */
 	void exitAttribute(XPathParser.AttributeContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Descendant}
+	 * Enter a parse tree produced by the {@code SlashRp}
 	 * labeled alternative in {@link XPathParser#rp}.
 	 * @param ctx the parse tree
 	 */
-	void enterDescendant(XPathParser.DescendantContext ctx);
+	void enterSlashRp(XPathParser.SlashRpContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code Descendant}
+	 * Exit a parse tree produced by the {@code SlashRp}
 	 * labeled alternative in {@link XPathParser#rp}.
 	 * @param ctx the parse tree
 	 */
-	void exitDescendant(XPathParser.DescendantContext ctx);
+	void exitSlashRp(XPathParser.SlashRpContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code CommaPath}
+	 * Enter a parse tree produced by the {@code FilterRp}
 	 * labeled alternative in {@link XPathParser#rp}.
 	 * @param ctx the parse tree
 	 */
-	void enterCommaPath(XPathParser.CommaPathContext ctx);
+	void enterFilterRp(XPathParser.FilterRpContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code CommaPath}
+	 * Exit a parse tree produced by the {@code FilterRp}
 	 * labeled alternative in {@link XPathParser#rp}.
 	 * @param ctx the parse tree
 	 */
-	void exitCommaPath(XPathParser.CommaPathContext ctx);
+	void exitFilterRp(XPathParser.FilterRpContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Text}
 	 * labeled alternative in {@link XPathParser#rp}.
@@ -103,18 +103,6 @@ public interface XPathListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitText(XPathParser.TextContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ParaPath}
-	 * labeled alternative in {@link XPathParser#rp}.
-	 * @param ctx the parse tree
-	 */
-	void enterParaPath(XPathParser.ParaPathContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ParaPath}
-	 * labeled alternative in {@link XPathParser#rp}.
-	 * @param ctx the parse tree
-	 */
-	void exitParaPath(XPathParser.ParaPathContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Tag}
 	 * labeled alternative in {@link XPathParser#rp}.
@@ -139,6 +127,18 @@ public interface XPathListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCurrent(XPathParser.CurrentContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code CommaRp}
+	 * labeled alternative in {@link XPathParser#rp}.
+	 * @param ctx the parse tree
+	 */
+	void enterCommaRp(XPathParser.CommaRpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CommaRp}
+	 * labeled alternative in {@link XPathParser#rp}.
+	 * @param ctx the parse tree
+	 */
+	void exitCommaRp(XPathParser.CommaRpContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code LogicFilter}
 	 * labeled alternative in {@link XPathParser#f}.
@@ -176,17 +176,17 @@ public interface XPathListener extends ParseTreeListener {
 	 */
 	void exitNotFilter(XPathParser.NotFilterContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ConditionFlter}
+	 * Enter a parse tree produced by the {@code ConstantFilter}
 	 * labeled alternative in {@link XPathParser#f}.
 	 * @param ctx the parse tree
 	 */
-	void enterConditionFlter(XPathParser.ConditionFlterContext ctx);
+	void enterConstantFilter(XPathParser.ConstantFilterContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ConditionFlter}
+	 * Exit a parse tree produced by the {@code ConstantFilter}
 	 * labeled alternative in {@link XPathParser#f}.
 	 * @param ctx the parse tree
 	 */
-	void exitConditionFlter(XPathParser.ConditionFlterContext ctx);
+	void exitConstantFilter(XPathParser.ConstantFilterContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ParaFilter}
 	 * labeled alternative in {@link XPathParser#f}.

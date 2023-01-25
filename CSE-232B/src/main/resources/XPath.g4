@@ -9,14 +9,14 @@ ap: docName slash rp;
 
 rp: tagName #Tag | STAR #All | CURRENT #Current | PARENT #Parent | TEXT #Text
     | attrName #Attribute
-    | LPR rp RPR #ParaPath
-    | rp slash rp #Descendant
-    | rp LSB f RSB #FilterPath
-    | rp COMMA rp #CommaPath;
+    | LPR rp RPR #ParaRp
+    | rp slash rp #SlashRp
+    | rp LSB f RSB #FilterRp
+    | rp COMMA rp #CommaRp;
 
 f:  rp #RpFilter
     | rp comp rp #CompareFilter
-    |rp EQ_N stringConstant #ConditionFlter
+    |rp EQ_N stringConstant #ConstantFilter
     | LPR f RPR #ParaFilter
     | f logic f #LogicFilter
     | NOT f #NotFilter;

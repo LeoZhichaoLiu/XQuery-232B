@@ -38,7 +38,7 @@
                 </executions>
                 <configuration>
                     <sourceDirectory>${basedir}/src/main/resources/antlr4</sourceDirectory>
-                    <outputDirectory>${basedir}/src/main/java/parsers</outputDirectory>
+                    <outputDirectory>${basedir}/src/main/java</outputDirectory>
                     <listener>true</listener>
                     <treatWarningsAsErrors>true</treatWarningsAsErrors>
                 </configuration>
