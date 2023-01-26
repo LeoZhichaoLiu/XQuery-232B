@@ -1,4 +1,4 @@
-package xpath;
+package visitor;
 
 import parsers.*;
 import expression.*;
