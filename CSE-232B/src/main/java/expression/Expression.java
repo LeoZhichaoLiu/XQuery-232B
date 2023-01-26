@@ -11,17 +11,6 @@ public interface Expression {
 
     enum ExpressionKind {
         ap,
-        Tag,
-        All,
-        Current,
-        Parent,
-        Text,
-        Attribute,
-        ParaPath,
-        Descendant,
-        FilterPath,
-        CommaPath,
-        RpFilter,
         DoubleRp,
         SingleRp,
         AttTagRp,
