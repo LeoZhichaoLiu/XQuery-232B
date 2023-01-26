@@ -5,7 +5,7 @@ import org.w3c.dom.*;
 
 public class AttTagRp implements Expression {
 
-    enum Type {
+    public enum Type {
         Attribute,
         Tag;
     }

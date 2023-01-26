@@ -9,7 +9,7 @@ public class DoubleFilter implements Expression {
     final Compare cp;
     final Expression rp2;
 
-    enum Compare {
+    public enum Compare {
         EQ_N,
         EQ,
         IS_N,

@@ -5,7 +5,7 @@ import org.w3c.dom.Node;
 
 public class DoubleRp implements Expression {
 
-    enum Operator {
+    public enum Operator {
         SSLASH,
         DSLASH,
         COMMA;

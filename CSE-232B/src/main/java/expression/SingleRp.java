@@ -5,7 +5,7 @@ import org.w3c.dom.*;
 
 public class SingleRp implements Expression {
 
-    enum Value {
+    public enum Value {
         CURRENT,
         PARENT,
         ALL,

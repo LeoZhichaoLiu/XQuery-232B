@@ -5,7 +5,7 @@ import java.util.*;
 
 public class LogicFilter implements Expression {
 
-    enum Logic {
+    public enum Logic {
         AND,
         OR;
     }

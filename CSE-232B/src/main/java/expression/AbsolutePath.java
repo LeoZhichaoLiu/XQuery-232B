@@ -5,7 +5,7 @@ import org.w3c.dom.Node;
 
 public class AbsolutePath implements Expression {
 
-    enum Slash {
+    public enum Slash {
         SSLASH,
         DSLASH;
     }
