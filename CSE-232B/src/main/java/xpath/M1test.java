@@ -33,7 +33,6 @@ public class M1test {
         }
         //String query=obtainQuery(args[0]);
         String query = args[0];
-        System.out.println("hhh");
         DocumentBuilder dbr=buildDocument();
         List<Node> res=compare(query,dbr);
         System.out.println(res.size());
@@ -73,13 +72,13 @@ public class M1test {
         //Interface for expressions
         AbsolutePath absoluteExpression = (AbsolutePath)rootExp;
         //ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        System.out.println(absoluteExpression.returnDoc());
+        //System.out.println(absoluteExpression.returnDoc());
         File is = new File(absoluteExpression.returnDoc());
 
         //InputStream is = classloader.getResourceAsStream(absoluteExpression.returnDoc());
         Document doc = dbr.parse(is);
 
-        System.out.println(doc.getDocumentElement().getNodeName());
+        //System.out.println(doc.getDocumentElement().getNodeName());
 
         List<Node> inputNodes = new ArrayList<>();
         inputNodes.add(doc);

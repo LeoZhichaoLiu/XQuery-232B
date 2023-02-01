@@ -36,7 +36,6 @@ public class AbsolutePath implements Expression {
 
         if (slash == Slash.SSLASH) {
             res = rp.search(input);
-            System.out.println("gg");
 
         } else if (slash == Slash.DSLASH){
             List<Node> descendant = searchDescendant(input);
