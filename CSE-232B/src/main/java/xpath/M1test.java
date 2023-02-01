@@ -1,7 +1,6 @@
 package xpath;
 
-import expression.AbsolutePath;
-import expression.Expression;
+import expression.*;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -22,23 +21,29 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-public class main {
+public class M1test {
     public static void main(String[] args) throws Exception{
-        if(args.length!=3) {
+
+        if(args.length!=1) {
             System.out.println("Please input the both XML file path and the query file path!");
+            System.out.println(args[0]);
             System.exit(-1);
         }
-        String query=obtainQuery(args[0]);
+        //String query=obtainQuery(args[0]);
+        String query = args[0];
+        System.out.println("hhh");
         DocumentBuilder dbr=buildDocument();
         List<Node> res=compare(query,dbr);
+        System.out.println(res.size());
         transform(res);
     }
 
     public static DocumentBuilder buildDocument() throws ParserConfigurationException {
         DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
         DocumentBuilder db=dbf.newDocumentBuilder();
-        db.setEntityResolver(new MyEntityResolver());
+        //db.setEntityResolver(new MyEntityResolver());
         return db;
     }
 
@@ -67,9 +72,14 @@ public class main {
 
         //Interface for expressions
         AbsolutePath absoluteExpression = (AbsolutePath)rootExp;
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        InputStream is = classloader.getResourceAsStream(absoluteExpression.returnDoc());
+        //ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        System.out.println(absoluteExpression.returnDoc());
+        File is = new File(absoluteExpression.returnDoc());
+
+        //InputStream is = classloader.getResourceAsStream(absoluteExpression.returnDoc());
         Document doc = dbr.parse(is);
+
+        System.out.println(doc.getDocumentElement().getNodeName());
 
         List<Node> inputNodes = new ArrayList<>();
         inputNodes.add(doc);
