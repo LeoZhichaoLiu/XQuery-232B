@@ -21,6 +21,10 @@ public class AbsolutePath implements Expression {
         this.rp = rp;
     }
 
+    public String returnDoc(){
+        return this.doc;
+    }
+
     @Override
     public List<Node> search (List<Node> input) throws Exception{
 
