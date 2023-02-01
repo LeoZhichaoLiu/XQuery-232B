@@ -7,7 +7,7 @@ public class AbsolutePath implements Expression {
 
     public enum Slash {
         SSLASH,
-        DSLASH;
+        DSLASH
     }
 
     final String doc;
@@ -23,6 +23,10 @@ public class AbsolutePath implements Expression {
 
     public String returnDoc(){
         return this.doc;
+    }
+
+    public String getDoc() {
+        return doc;
     }
 
     @Override
