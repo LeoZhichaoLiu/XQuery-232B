@@ -28,11 +28,14 @@ public class AttTagRp implements Expression {
                 res.add(item);
 
             } else if (type == Type.Tag) {
+
                 NodeList childNodes = node.getChildNodes();
                 for (int i = 0; i < childNodes.getLength(); i++) {
                     Node item = childNodes.item(i);
 
-                    if (item.getNodeType() == Node.ELEMENT_NODE && item.getNodeName() == str) {
+                    //System.out.println(item.getNodeName() + " " + str);
+
+                    if (item.getNodeType() == Node.ELEMENT_NODE && item.getNodeName().equals(str)) {
                         res.add(item);
                     }
                 }
