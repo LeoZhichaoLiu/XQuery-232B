@@ -22,6 +22,11 @@
         <option value="$PROJECT_DIR$/CSE-232B/pom.xml" />
       </list>
     </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/CSE-232B/untitled/pom.xml" />
+      </set>
+    </option>
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="corretto-18" project-jdk-type="JavaSDK" />
 </project>

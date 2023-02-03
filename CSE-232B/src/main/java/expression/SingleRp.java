@@ -22,18 +22,20 @@ public class SingleRp implements Expression {
     @Override
     public List<Node> search (List<Node> input) throws Exception  {
         List<Node> res = new ArrayList<>();
-
+//        System.out.println(222);
         if (value == Value.CURRENT) {
+//            System.out.println(666);
             return input;
-
         } else if (value == Value.PARENT) {
+//            System.out.println(777);
             for (Node node : input) {
-                if (!(node instanceof Document)) {
+                if (!(node instanceof Document)  && !res.contains(node.getParentNode())) {
                     res.add(node.getParentNode());
                 }
             }
 
         } else {
+//            System.out.println(888);
             for (Node node : input) {
                 NodeList childNodes = node.getChildNodes();
 

@@ -13,6 +13,7 @@ public class NotFilter implements Expression {
 
     @Override
     public List<Node> search (List<Node> input) throws Exception {
+
         List<Node> res = new ArrayList<>(input);
         List<Node> filterNodes = f.search(input);
 

@@ -25,20 +25,19 @@ public class AbsolutePath implements Expression {
         return this.doc;
     }
 
-    public String getDoc() {
-        return doc;
-    }
-
     @Override
     public List<Node> search (List<Node> input) throws Exception{
 
         List<Node> res;
+//        System.out.println(111);
 
         if (slash == Slash.SSLASH) {
             res = rp.search(input);
-
+//            System.out.println(333);
         } else if (slash == Slash.DSLASH){
+//            System.out.println(444);
             List<Node> descendant = searchDescendant(input);
+//            System.out.println(descendant);
             res = rp.search(descendant);
 
         } else {

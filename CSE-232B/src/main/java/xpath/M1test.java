@@ -27,7 +27,7 @@ public class M1test {
     public static void main(String[] args) throws Exception{
 
         if(args.length!=1) {
-            System.out.println("Please input the both XML file path and the query file path!");
+            System.out.println("Please input the file path!");
             System.out.println(args[0]);
             System.exit(-1);
         }
@@ -64,18 +64,14 @@ public class M1test {
     }
 
     public static List<Node> compare(String query,DocumentBuilder dbr) throws Exception{
-
+//        System.out.println(query);
         final ParserRuleContext tree = pathParser(query).ap();
         final ExpressionBuilder expBuild = new ExpressionBuilder();
         final Expression rootExp = expBuild.visit(tree);
 
         //Interface for expressions
         AbsolutePath absoluteExpression = (AbsolutePath)rootExp;
-        //ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        //System.out.println(absoluteExpression.returnDoc());
         File is = new File(absoluteExpression.returnDoc());
-
-        //InputStream is = classloader.getResourceAsStream(absoluteExpression.returnDoc());
         Document doc = dbr.parse(is);
 
         //System.out.println(doc.getDocumentElement().getNodeName());

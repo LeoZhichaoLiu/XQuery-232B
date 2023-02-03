@@ -24,18 +24,20 @@ public class DoubleRp implements Expression {
 
     @Override
     public List<Node> search (List<Node> input) throws Exception {
-
+//        System.out.println("search in DoubleRp");
         List<Node> leftInput = rp1.search(input);
         List<Node> res = new ArrayList<>();
 
         if (operator == operator.SSLASH) {
             res = rp2.search(leftInput);
-
+//            System.out.println("leftInput SSlash");
         } else if (operator == operator.DSLASH) {
+//            System.out.println("DSLASH");
             List<Node> descendant = searchDescendant(leftInput);
             res = rp2.search(descendant);
 
         } else if (operator == operator.COMMA) {
+            System.out.println("Comma");
             List<Node> rightInput = rp2.search(input);
             res.addAll(leftInput);
             res.addAll(rightInput);
