@@ -19,9 +19,9 @@ public class XPathParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		DOC=1, NAME=2, LPR=3, RPR=4, LSB=5, RSB=6, SSLASH=7, DSLASH=8, CURRENT=9, 
-		PARENT=10, STAR=11, COMMA=12, NOT=13, AND=14, OR=15, EQ_N=16, EQ=17, IS_N=18, 
-		IS=19, TEXT=20, AT=21, ID=22, WS=23, STRING=24, ESCAPE=25;
+		T__0=1, T__1=2, DOC=3, LPR=4, RPR=5, LSB=6, RSB=7, SSLASH=8, DSLASH=9, 
+		CURRENT=10, PARENT=11, STAR=12, COMMA=13, NOT=14, AND=15, OR=16, EQ_N=17, 
+		EQ=18, IS_N=19, IS=20, TEXT=21, AT=22, ID=23, WS=24;
 	public static final int
 		RULE_ap = 0, RULE_rp = 1, RULE_f = 2, RULE_slash = 3, RULE_docName = 4, 
 		RULE_tagName = 5, RULE_attrName = 6, RULE_comp = 7, RULE_logic = 8, RULE_stringConstant = 9;
@@ -35,17 +35,17 @@ public class XPathParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, null, null, "'('", "')'", "'['", "']'", "'/'", "'//'", "'.'", "'..'", 
-			"'*'", "','", "'not'", "'and'", "'or'", "'='", "'eq'", "'=='", "'is'", 
-			"'text()'", "'@'"
+			null, "'\"'", "'.xml\"'", null, "'('", "')'", "'['", "']'", "'/'", "'//'", 
+			"'.'", "'..'", "'*'", "','", "'not'", "'and'", "'or'", "'='", "'eq'", 
+			"'=='", "'is'", "'text()'", "'@'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "DOC", "NAME", "LPR", "RPR", "LSB", "RSB", "SSLASH", "DSLASH", 
+			null, null, null, "DOC", "LPR", "RPR", "LSB", "RSB", "SSLASH", "DSLASH", 
 			"CURRENT", "PARENT", "STAR", "COMMA", "NOT", "AND", "OR", "EQ_N", "EQ", 
-			"IS_N", "IS", "TEXT", "AT", "ID", "WS", "STRING", "ESCAPE"
+			"IS_N", "IS", "TEXT", "AT", "ID", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -861,7 +861,7 @@ public class XPathParser extends Parser {
 	public static class DocNameContext extends ParserRuleContext {
 		public TerminalNode DOC() { return getToken(XPathParser.DOC, 0); }
 		public TerminalNode LPR() { return getToken(XPathParser.LPR, 0); }
-		public TerminalNode NAME() { return getToken(XPathParser.NAME, 0); }
+		public TerminalNode ID() { return getToken(XPathParser.ID, 0); }
 		public TerminalNode RPR() { return getToken(XPathParser.RPR, 0); }
 		public DocNameContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -893,8 +893,12 @@ public class XPathParser extends Parser {
 			setState(84);
 			match(LPR);
 			setState(85);
-			match(NAME);
+			match(T__0);
 			setState(86);
+			match(ID);
+			setState(87);
+			match(T__1);
+			setState(88);
 			match(RPR);
 			}
 		}
@@ -937,7 +941,7 @@ public class XPathParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(88);
+			setState(90);
 			match(ID);
 			}
 		}
@@ -981,9 +985,9 @@ public class XPathParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(90);
+			setState(92);
 			match(AT);
-			setState(91);
+			setState(93);
 			match(ID);
 			}
 		}
@@ -1030,9 +1034,9 @@ public class XPathParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(93);
+			setState(95);
 			_la = _input.LA(1);
-			if ( !(((_la) & ~0x3f) == 0 && ((1L << _la) & 983040L) != 0) ) {
+			if ( !(((_la) & ~0x3f) == 0 && ((1L << _la) & 1966080L) != 0) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -1083,7 +1087,7 @@ public class XPathParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(95);
+			setState(97);
 			_la = _input.LA(1);
 			if ( !(_la==AND || _la==OR) ) {
 			_errHandler.recoverInline(this);
@@ -1108,7 +1112,7 @@ public class XPathParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class StringConstantContext extends ParserRuleContext {
-		public TerminalNode STRING() { return getToken(XPathParser.STRING, 0); }
+		public TerminalNode ID() { return getToken(XPathParser.ID, 0); }
 		public StringConstantContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1134,8 +1138,12 @@ public class XPathParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(97);
-			match(STRING);
+			setState(99);
+			match(T__0);
+			setState(100);
+			match(ID);
+			setState(101);
+			match(T__0);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1178,7 +1186,7 @@ public class XPathParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0019d\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u0001\u0018h\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
 		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
 		"\b\u0007\b\u0002\t\u0007\t\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000"+
@@ -1192,51 +1200,52 @@ public class XPathParser extends Parser {
 		"\u0001\u0002\u0001\u0002\u0001\u0002\u0003\u0002G\b\u0002\u0001\u0002"+
 		"\u0001\u0002\u0001\u0002\u0001\u0002\u0005\u0002M\b\u0002\n\u0002\f\u0002"+
 		"P\t\u0002\u0001\u0003\u0001\u0003\u0001\u0004\u0001\u0004\u0001\u0004"+
-		"\u0001\u0004\u0001\u0004\u0001\u0005\u0001\u0005\u0001\u0006\u0001\u0006"+
-		"\u0001\u0006\u0001\u0007\u0001\u0007\u0001\b\u0001\b\u0001\t\u0001\t\u0001"+
-		"\t\u0000\u0002\u0002\u0004\n\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010"+
-		"\u0012\u0000\u0003\u0001\u0000\u0007\b\u0001\u0000\u0010\u0013\u0001\u0000"+
-		"\u000e\u000fg\u0000\u0014\u0001\u0000\u0000\u0000\u0002#\u0001\u0000\u0000"+
-		"\u0000\u0004F\u0001\u0000\u0000\u0000\u0006Q\u0001\u0000\u0000\u0000\b"+
-		"S\u0001\u0000\u0000\u0000\nX\u0001\u0000\u0000\u0000\fZ\u0001\u0000\u0000"+
-		"\u0000\u000e]\u0001\u0000\u0000\u0000\u0010_\u0001\u0000\u0000\u0000\u0012"+
-		"a\u0001\u0000\u0000\u0000\u0014\u0015\u0003\b\u0004\u0000\u0015\u0016"+
-		"\u0003\u0006\u0003\u0000\u0016\u0017\u0003\u0002\u0001\u0000\u0017\u0001"+
-		"\u0001\u0000\u0000\u0000\u0018\u0019\u0006\u0001\uffff\uffff\u0000\u0019"+
-		"$\u0003\n\u0005\u0000\u001a$\u0005\u000b\u0000\u0000\u001b$\u0005\t\u0000"+
-		"\u0000\u001c$\u0005\n\u0000\u0000\u001d$\u0005\u0014\u0000\u0000\u001e"+
-		"$\u0003\f\u0006\u0000\u001f \u0005\u0003\u0000\u0000 !\u0003\u0002\u0001"+
-		"\u0000!\"\u0005\u0004\u0000\u0000\"$\u0001\u0000\u0000\u0000#\u0018\u0001"+
-		"\u0000\u0000\u0000#\u001a\u0001\u0000\u0000\u0000#\u001b\u0001\u0000\u0000"+
-		"\u0000#\u001c\u0001\u0000\u0000\u0000#\u001d\u0001\u0000\u0000\u0000#"+
-		"\u001e\u0001\u0000\u0000\u0000#\u001f\u0001\u0000\u0000\u0000$3\u0001"+
-		"\u0000\u0000\u0000%&\n\u0003\u0000\u0000&\'\u0003\u0006\u0003\u0000\'"+
-		"(\u0003\u0002\u0001\u0004(2\u0001\u0000\u0000\u0000)*\n\u0001\u0000\u0000"+
-		"*+\u0005\f\u0000\u0000+2\u0003\u0002\u0001\u0002,-\n\u0002\u0000\u0000"+
-		"-.\u0005\u0005\u0000\u0000./\u0003\u0004\u0002\u0000/0\u0005\u0006\u0000"+
-		"\u000002\u0001\u0000\u0000\u00001%\u0001\u0000\u0000\u00001)\u0001\u0000"+
-		"\u0000\u00001,\u0001\u0000\u0000\u000025\u0001\u0000\u0000\u000031\u0001"+
-		"\u0000\u0000\u000034\u0001\u0000\u0000\u00004\u0003\u0001\u0000\u0000"+
-		"\u000053\u0001\u0000\u0000\u000067\u0006\u0002\uffff\uffff\u00007G\u0003"+
-		"\u0002\u0001\u000089\u0003\u0002\u0001\u00009:\u0003\u000e\u0007\u0000"+
-		":;\u0003\u0002\u0001\u0000;G\u0001\u0000\u0000\u0000<=\u0003\u0002\u0001"+
-		"\u0000=>\u0005\u0010\u0000\u0000>?\u0003\u0012\t\u0000?G\u0001\u0000\u0000"+
-		"\u0000@A\u0005\u0003\u0000\u0000AB\u0003\u0004\u0002\u0000BC\u0005\u0004"+
-		"\u0000\u0000CG\u0001\u0000\u0000\u0000DE\u0005\r\u0000\u0000EG\u0003\u0004"+
-		"\u0002\u0001F6\u0001\u0000\u0000\u0000F8\u0001\u0000\u0000\u0000F<\u0001"+
-		"\u0000\u0000\u0000F@\u0001\u0000\u0000\u0000FD\u0001\u0000\u0000\u0000"+
-		"GN\u0001\u0000\u0000\u0000HI\n\u0002\u0000\u0000IJ\u0003\u0010\b\u0000"+
-		"JK\u0003\u0004\u0002\u0003KM\u0001\u0000\u0000\u0000LH\u0001\u0000\u0000"+
-		"\u0000MP\u0001\u0000\u0000\u0000NL\u0001\u0000\u0000\u0000NO\u0001\u0000"+
-		"\u0000\u0000O\u0005\u0001\u0000\u0000\u0000PN\u0001\u0000\u0000\u0000"+
-		"QR\u0007\u0000\u0000\u0000R\u0007\u0001\u0000\u0000\u0000ST\u0005\u0001"+
-		"\u0000\u0000TU\u0005\u0003\u0000\u0000UV\u0005\u0002\u0000\u0000VW\u0005"+
-		"\u0004\u0000\u0000W\t\u0001\u0000\u0000\u0000XY\u0005\u0016\u0000\u0000"+
-		"Y\u000b\u0001\u0000\u0000\u0000Z[\u0005\u0015\u0000\u0000[\\\u0005\u0016"+
-		"\u0000\u0000\\\r\u0001\u0000\u0000\u0000]^\u0007\u0001\u0000\u0000^\u000f"+
-		"\u0001\u0000\u0000\u0000_`\u0007\u0002\u0000\u0000`\u0011\u0001\u0000"+
-		"\u0000\u0000ab\u0005\u0018\u0000\u0000b\u0013\u0001\u0000\u0000\u0000"+
-		"\u0005#13FN";
+		"\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0005\u0001\u0005"+
+		"\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0007\u0001\u0007\u0001\b\u0001"+
+		"\b\u0001\t\u0001\t\u0001\t\u0001\t\u0001\t\u0000\u0002\u0002\u0004\n\u0000"+
+		"\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0000\u0003\u0001\u0000\b\t"+
+		"\u0001\u0000\u0011\u0014\u0001\u0000\u000f\u0010k\u0000\u0014\u0001\u0000"+
+		"\u0000\u0000\u0002#\u0001\u0000\u0000\u0000\u0004F\u0001\u0000\u0000\u0000"+
+		"\u0006Q\u0001\u0000\u0000\u0000\bS\u0001\u0000\u0000\u0000\nZ\u0001\u0000"+
+		"\u0000\u0000\f\\\u0001\u0000\u0000\u0000\u000e_\u0001\u0000\u0000\u0000"+
+		"\u0010a\u0001\u0000\u0000\u0000\u0012c\u0001\u0000\u0000\u0000\u0014\u0015"+
+		"\u0003\b\u0004\u0000\u0015\u0016\u0003\u0006\u0003\u0000\u0016\u0017\u0003"+
+		"\u0002\u0001\u0000\u0017\u0001\u0001\u0000\u0000\u0000\u0018\u0019\u0006"+
+		"\u0001\uffff\uffff\u0000\u0019$\u0003\n\u0005\u0000\u001a$\u0005\f\u0000"+
+		"\u0000\u001b$\u0005\n\u0000\u0000\u001c$\u0005\u000b\u0000\u0000\u001d"+
+		"$\u0005\u0015\u0000\u0000\u001e$\u0003\f\u0006\u0000\u001f \u0005\u0004"+
+		"\u0000\u0000 !\u0003\u0002\u0001\u0000!\"\u0005\u0005\u0000\u0000\"$\u0001"+
+		"\u0000\u0000\u0000#\u0018\u0001\u0000\u0000\u0000#\u001a\u0001\u0000\u0000"+
+		"\u0000#\u001b\u0001\u0000\u0000\u0000#\u001c\u0001\u0000\u0000\u0000#"+
+		"\u001d\u0001\u0000\u0000\u0000#\u001e\u0001\u0000\u0000\u0000#\u001f\u0001"+
+		"\u0000\u0000\u0000$3\u0001\u0000\u0000\u0000%&\n\u0003\u0000\u0000&\'"+
+		"\u0003\u0006\u0003\u0000\'(\u0003\u0002\u0001\u0004(2\u0001\u0000\u0000"+
+		"\u0000)*\n\u0001\u0000\u0000*+\u0005\r\u0000\u0000+2\u0003\u0002\u0001"+
+		"\u0002,-\n\u0002\u0000\u0000-.\u0005\u0006\u0000\u0000./\u0003\u0004\u0002"+
+		"\u0000/0\u0005\u0007\u0000\u000002\u0001\u0000\u0000\u00001%\u0001\u0000"+
+		"\u0000\u00001)\u0001\u0000\u0000\u00001,\u0001\u0000\u0000\u000025\u0001"+
+		"\u0000\u0000\u000031\u0001\u0000\u0000\u000034\u0001\u0000\u0000\u0000"+
+		"4\u0003\u0001\u0000\u0000\u000053\u0001\u0000\u0000\u000067\u0006\u0002"+
+		"\uffff\uffff\u00007G\u0003\u0002\u0001\u000089\u0003\u0002\u0001\u0000"+
+		"9:\u0003\u000e\u0007\u0000:;\u0003\u0002\u0001\u0000;G\u0001\u0000\u0000"+
+		"\u0000<=\u0003\u0002\u0001\u0000=>\u0005\u0011\u0000\u0000>?\u0003\u0012"+
+		"\t\u0000?G\u0001\u0000\u0000\u0000@A\u0005\u0004\u0000\u0000AB\u0003\u0004"+
+		"\u0002\u0000BC\u0005\u0005\u0000\u0000CG\u0001\u0000\u0000\u0000DE\u0005"+
+		"\u000e\u0000\u0000EG\u0003\u0004\u0002\u0001F6\u0001\u0000\u0000\u0000"+
+		"F8\u0001\u0000\u0000\u0000F<\u0001\u0000\u0000\u0000F@\u0001\u0000\u0000"+
+		"\u0000FD\u0001\u0000\u0000\u0000GN\u0001\u0000\u0000\u0000HI\n\u0002\u0000"+
+		"\u0000IJ\u0003\u0010\b\u0000JK\u0003\u0004\u0002\u0003KM\u0001\u0000\u0000"+
+		"\u0000LH\u0001\u0000\u0000\u0000MP\u0001\u0000\u0000\u0000NL\u0001\u0000"+
+		"\u0000\u0000NO\u0001\u0000\u0000\u0000O\u0005\u0001\u0000\u0000\u0000"+
+		"PN\u0001\u0000\u0000\u0000QR\u0007\u0000\u0000\u0000R\u0007\u0001\u0000"+
+		"\u0000\u0000ST\u0005\u0003\u0000\u0000TU\u0005\u0004\u0000\u0000UV\u0005"+
+		"\u0001\u0000\u0000VW\u0005\u0017\u0000\u0000WX\u0005\u0002\u0000\u0000"+
+		"XY\u0005\u0005\u0000\u0000Y\t\u0001\u0000\u0000\u0000Z[\u0005\u0017\u0000"+
+		"\u0000[\u000b\u0001\u0000\u0000\u0000\\]\u0005\u0016\u0000\u0000]^\u0005"+
+		"\u0017\u0000\u0000^\r\u0001\u0000\u0000\u0000_`\u0007\u0001\u0000\u0000"+
+		"`\u000f\u0001\u0000\u0000\u0000ab\u0007\u0002\u0000\u0000b\u0011\u0001"+
+		"\u0000\u0000\u0000cd\u0005\u0001\u0000\u0000de\u0005\u0017\u0000\u0000"+
+		"ef\u0005\u0001\u0000\u0000f\u0013\u0001\u0000\u0000\u0000\u0005#13FN";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

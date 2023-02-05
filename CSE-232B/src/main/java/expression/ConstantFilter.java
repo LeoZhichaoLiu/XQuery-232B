@@ -11,6 +11,8 @@ public class ConstantFilter implements Expression {
     public ConstantFilter (Expression rp, String constant) {
         this.rp = rp;
         this.constant = constant;
+        System.out.println("hahaha");
+        System.out.println(constant);
     }
 
     @Override

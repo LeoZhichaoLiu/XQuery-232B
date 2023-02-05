@@ -1,4 +1,4 @@
-package xpath;
+package visitor;
 
 import parsers.*;
 import expression.*;
@@ -9,7 +9,10 @@ public class ExpressionBuilder extends XPathBaseVisitor<Expression> {
     // Absolute Path
     @Override
     public Expression visitAp(XPathParser.ApContext ctx) {
-        String docName = ctx.docName().NAME().getText();
+        String docName = ctx.docName().ID().getText();
+
+        //System.out.println(docName);
+
         AbsolutePath.Slash slash = null;
         Expression rp = visit(ctx.rp());
 
@@ -19,7 +22,7 @@ public class ExpressionBuilder extends XPathBaseVisitor<Expression> {
             slash = AbsolutePath.Slash.DSLASH;
         }
 
-        return new AbsolutePath(docName.substring(1, docName.length()-1), slash, rp);
+        return new AbsolutePath(docName, slash, rp);
     }
 
     // Relative Path
@@ -111,6 +114,8 @@ public class ExpressionBuilder extends XPathBaseVisitor<Expression> {
         DoubleFilter.Compare comp = null;
         Expression rp2 = visit(ctx.rp(1));
 
+        //System.out.println("GGG");
+
         if (ctx.comp().getText().equals("=")) {
             comp = DoubleFilter.Compare.EQ_N;
 
@@ -131,7 +136,9 @@ public class ExpressionBuilder extends XPathBaseVisitor<Expression> {
     public Expression visitConstantFilter(XPathParser.ConstantFilterContext ctx) {
 
         Expression rp = visit(ctx.rp());
-        String constant = ctx.stringConstant().getText();
+        String constant = ctx.stringConstant().ID().getText();
+
+        //System.out.println(constant);
 
         return new ConstantFilter(rp, constant);
     }

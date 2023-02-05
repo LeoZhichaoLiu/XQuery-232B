@@ -22,7 +22,7 @@ public class AbsolutePath implements Expression {
     }
 
     public String returnDoc(){
-        return this.doc;
+        return this.doc+".xml";
     }
 
     @Override

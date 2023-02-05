@@ -1,100 +1,88 @@
 package xpath;
 
 import expression.*;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Text;
-import parsers.XPathLexer;
-import parsers.XPathParser;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
+import parsers.*;
+
+import org.antlr.v4.runtime.*;
+import org.w3c.dom.*;
+import visitor.ExpressionBuilder;
+
+import javax.xml.parsers.*;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class M1test {
     public static void main(String[] args) throws Exception{
 
-        if(args.length!=1) {
-            System.out.println("Please input the file path!");
-            System.out.println(args[0]);
+        if(args.length != 2) {
+            System.out.println("Your input size is wrong, please check it!");
             System.exit(-1);
         }
-        //String query=obtainQuery(args[0]);
-        String query = args[0];
-        DocumentBuilder dbr=buildDocument();
-        List<Node> res=compare(query,dbr);
+
+        String queryFileName = args[0];
+        String outputFileName = args[1];
+
+        String query = new String(Files.readAllBytes(Paths.get(queryFileName)), "UTF-8");
+        System.out.println(query);
+
+        DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder document = documentFactory.newDocumentBuilder();
+        List<Node> res = Search(query, document);
         System.out.println(res.size());
-        transform(res);
+        convert2XML(res, outputFileName);
     }
 
-    public static DocumentBuilder buildDocument() throws ParserConfigurationException {
-        DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
-        DocumentBuilder db=dbf.newDocumentBuilder();
-        //db.setEntityResolver(new MyEntityResolver());
-        return db;
-    }
 
-    public static String obtainQuery(String filePath) throws IOException {
-        StringBuilder query= new StringBuilder();
-        BufferedReader file=new BufferedReader(new FileReader(filePath));
-        String str;
-        while ((str = file.readLine())!=null) {
-            query.append(str.replaceAll("\r\n|\r|\n", " "));
-            query.append(" ");
-        }
-        return query.toString();
-    }
+    public static List<Node> Search(String query, DocumentBuilder documentBuilder) throws Exception{
 
-    public static XPathParser pathParser(String path)  {
-        final XPathLexer lexer = new XPathLexer(CharStreams.fromString(path));
-        final CommonTokenStream tokens = new CommonTokenStream(lexer);
-        return new XPathParser(tokens);
-    }
+        List<Node> cur_position = new ArrayList<>();
+        XPathLexer lexer = new XPathLexer(CharStreams.fromString(query));
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-    public static List<Node> compare(String query,DocumentBuilder dbr) throws Exception{
-//        System.out.println(query);
-        final ParserRuleContext tree = pathParser(query).ap();
-        final ExpressionBuilder expBuild = new ExpressionBuilder();
-        final Expression rootExp = expBuild.visit(tree);
+        XPathParser parser = new XPathParser(tokens);
+        ParserRuleContext tree = parser.ap();
+
+        ExpressionBuilder expressionBuilder = new ExpressionBuilder();
+        expression.AbsolutePath root = (AbsolutePath) expressionBuilder.visit(tree);
 
         //Interface for expressions
-        AbsolutePath absoluteExpression = (AbsolutePath)rootExp;
-        File is = new File(absoluteExpression.returnDoc());
-        Document doc = dbr.parse(is);
+        File inputStream = new File(root.returnDoc());
+        Document doc = documentBuilder.parse(inputStream);
 
         //System.out.println(doc.getDocumentElement().getNodeName());
-
-        List<Node> inputNodes = new ArrayList<>();
-        inputNodes.add(doc);
-        return absoluteExpression.search(inputNodes);
+        cur_position.add(doc);
+        return root.search(cur_position);
     }
 
-    public static void transform(List<Node> result) throws Exception{
+    public static void convert2XML(List<Node> result, String outputFile) throws Exception {
+        DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder document = documentFactory.newDocumentBuilder();
+        Document outputDoc = document.newDocument();
+        outputDoc.setXmlStandalone(true);
+
+        Node resultTag = outputDoc.createElement("Result");
+        for (Node node : result) {
+            if (node != null) {
+                resultTag.appendChild(outputDoc.importNode(node, true));
+            }
+        }
+        outputDoc.appendChild(resultTag);
+
         TransformerFactory tfFactory = TransformerFactory.newInstance();
         Transformer tf = tfFactory.newTransformer();
         tf.setOutputProperty(OutputKeys.INDENT, "yes");
-        for (Node n: result) {
-            if(n instanceof Attr) {
-                System.out.println(n.getTextContent());
-            } else if (n instanceof Text) {
-                System.out.println(n.getTextContent());
-            } else {
-                tf.transform(new DOMSource(n), new StreamResult(
-                        new PrintStream(System.out)));
-            }
-        }
-    }
+        tf.setOutputProperty(OutputKeys.STANDALONE, "yes");
 
+        DOMSource domSource = new DOMSource(outputDoc);
+        StreamResult res = new StreamResult(new FileOutputStream(outputFile));
+        tf.transform(domSource, res);
+    }
 }
