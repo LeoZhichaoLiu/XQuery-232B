@@ -80,6 +80,7 @@ public class M1test {
         Transformer tf = tfFactory.newTransformer();
         tf.setOutputProperty(OutputKeys.INDENT, "yes");
         tf.setOutputProperty(OutputKeys.STANDALONE, "yes");
+        tf.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 
         DOMSource domSource = new DOMSource(outputDoc);
         StreamResult res = new StreamResult(new FileOutputStream(outputFile));
