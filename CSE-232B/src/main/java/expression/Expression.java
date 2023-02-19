@@ -2,8 +2,7 @@ package expression;
 
 import java.util.*;
 
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 
 public interface Expression {
 
