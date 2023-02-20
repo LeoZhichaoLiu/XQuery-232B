@@ -15,6 +15,7 @@ public class FilterRp implements Expression {
 
     @Override
     public List<Node> search (List<Node> input) throws Exception {
+//        System.out.println(121212);
         List<Node> left = rp.search (input);
         List<Node> res = filter.search (left);
         return res;
