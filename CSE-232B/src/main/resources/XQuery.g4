@@ -7,7 +7,7 @@ package xQuery_parsers;
 
 /* Rules */
 xq: Var #VarXq | stringConstant #StrXq | ap #ApXq
-    | LPR Var RPR #ParaXq | xq COMMA xq #CommaXq | xq slash rp #SlashXq
+    | LPR xq RPR #ParaXq | xq COMMA xq #CommaXq | xq slash rp #SlashXq
     | LTag tagName1 RTag LCurly xq RCurly LTag tagName2 RTag #TagCurlyXq
     | forClause letClause whereClause returnClause #FunctionXq
     | letClause xq #LetXq;
