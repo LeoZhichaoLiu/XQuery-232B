@@ -16,6 +16,8 @@ public class StrXq implements XQuery {
     public List<Node> search (Document document) throws Exception {
 
         List<Node> res = new ArrayList<>();
+        Node element = document.createTextNode(strConstant);
+        res.add(element);
         return res;
     }
 
