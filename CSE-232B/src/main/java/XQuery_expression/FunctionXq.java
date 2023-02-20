@@ -7,7 +7,6 @@ import java.util.*;
 
 public class FunctionXq implements XQuery{
 
-    final Map<String, List<Node>> map;
 
     public FunctionXq () {
 

@@ -90,20 +90,45 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         int num = ctx.forClause().Var().size();
         for (int i = 0; i < num; i++) {
             String name = ctx.forClause().Var(i).getText();
-            List<Node> node_list = visit(ctx.forClause().xq(i)).search(document);
-            for (Node item : node_list) {
-                //Map<String, List<Node>> map = new HashMap<>(map)
-            }
-            map.put(name, node_list);
+            List<Node> node_list = new ArrayList<>();
+            try {
+                node_list = visit(ctx.forClause().xq(i)).search(document);
+            } catch(Exception e) {}
+            map.put(name, new ArrayList<>(node_list));
         }
 
         if (ctx.letClause() != null) {
-            List<TerminalNode>
+            List<TerminalNode> name_list = ctx.letClause().Var();
+            List<XQueryParser.XqContext> xq_list = ctx.letClause().xq();
 
+            for (int i = 0; i < name_list.size(); i++) {
+                List<Node> nodes = new ArrayList<>();
+                try {
+                    nodes = visit(xq_list.get(i)).search(document);
+                } catch (Exception e) {}
+                map.put(name_list.get(i).getText(), nodes);
+            }
+        }
+
+        Boolean checkValid = true;
+
+        if (ctx.whereClause() != null) {
+            List<Node> condition_list = null;
+            try {
+                condition_list = visit(ctx.whereClause().cond()).search(document);
+            } catch (Exception e) {}
+            if (condition_list == null) checkValid = false;
+        }
+
+        if (checkValid) {
+            try {
+                res.addAll(visit(ctx.returnClause().xq()).search(document));
+            } catch (Exception e) {}
         }
 
         return new VarXq(res);
     }
+
 
 
 
