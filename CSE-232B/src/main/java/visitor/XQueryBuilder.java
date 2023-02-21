@@ -19,14 +19,15 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
 
+    // The Map stores each Var (String) as key, and list of nodes (Variable path) as value
     Map<String, List<Node>> map;
-    //Stack<Map<String, List<Node>>> map_stack;
+    // The builder to handle the XPath resolver
     ExpressionBuilder expressionBuilder;
+    // The document root to start building result
     Document document;
 
     public XQueryBuilder (Document document) throws Exception {
         this.map = new HashMap<>();
-        //this.map_stack = new Stack<>();
         this.expressionBuilder = new ExpressionBuilder();
         this.document = document;
     }
@@ -97,6 +98,10 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         return new FunctionXq(res);
     }
 
+
+    /*
+     * Helper function using recursion to handle the implementation of functionXq
+     */
     public void functionXq_handler(XQueryParser.FunctionXqContext ctx, int k, List<Node> res) throws Exception {
 
         // The termination base case is when k equals the size of all forClause, we then handle the let, where, and return
@@ -136,7 +141,7 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
             map.put(name, Arrays.asList(item));
             // Then use recursion to next step (k+1)
             functionXq_handler(ctx, k+1, res);
-            // When we return to last step, restore the map to origin.
+            // When we return to last step (finish the let where return), restore the map to origin.
             map = restore;
         }
     }
