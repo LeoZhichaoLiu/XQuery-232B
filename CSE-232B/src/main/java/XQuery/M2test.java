@@ -51,10 +51,11 @@ public class M2test {
         XQueryParser parser = new XQueryParser(tokens);
         ParserRuleContext tree = parser.xq();
 
+        Document document = documentBuilder.newDocument();
         XQueryBuilder xqueryBuilder = new XQueryBuilder(document);
         XQuery root =  xqueryBuilder.visit(tree);
-        
-        return root.search(cur_position);
+
+        return root.search(document);
     }
 
     public static void convert2XML(List<Node> result, String outputFile) throws Exception {
@@ -81,6 +82,5 @@ public class M2test {
         StreamResult res = new StreamResult(new FileOutputStream(outputFile));
         tf.transform(domSource, res);
     }
-
 
 }
