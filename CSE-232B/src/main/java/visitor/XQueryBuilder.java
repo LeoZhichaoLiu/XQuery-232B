@@ -20,13 +20,13 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
 
     Map<String, List<Node>> map;
-    Stack<Map<String, List<Node>>> map_stack;
+    //Stack<Map<String, List<Node>>> map_stack;
     ExpressionBuilder expressionBuilder;
     Document document;
 
     public XQueryBuilder (Document document) throws Exception {
         this.map = new HashMap<>();
-        this.map_stack = new Stack<>();
+        //this.map_stack = new Stack<>();
         this.expressionBuilder = new ExpressionBuilder();
         this.document = document;
     }
@@ -87,49 +87,59 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
 
         List<Node> res = new ArrayList<>();
 
-        int num = ctx.forClause().Var().size();
-        for (int i = 0; i < num; i++) {
-            String name = ctx.forClause().Var(i).getText();
-            List<Node> node_list = new ArrayList<>();
-            try {
-                node_list = visit(ctx.forClause().xq(i)).search(document);
-            } catch(Exception e) {}
-            map.put(name, new ArrayList<>(node_list));
-        }
+        try {
+            // We use helper function to implement recursion on the whole functionXq, the
+            // key idea is to use recursion to avoid duplicated counts in for clause
+            // We pass res List to record all the return nodes according to return clause.
+            functionXq_handler(ctx, 0, res);
+        } catch (Exception e) {}
 
-        if (ctx.letClause() != null) {
-            List<TerminalNode> name_list = ctx.letClause().Var();
-            List<XQueryParser.XqContext> xq_list = ctx.letClause().xq();
-
-            for (int i = 0; i < name_list.size(); i++) {
-                List<Node> nodes = new ArrayList<>();
-                try {
-                    nodes = visit(xq_list.get(i)).search(document);
-                } catch (Exception e) {}
-                map.put(name_list.get(i).getText(), nodes);
-            }
-        }
-
-        Boolean checkValid = true;
-
-        if (ctx.whereClause() != null) {
-            List<Node> condition_list = null;
-            try {
-                condition_list = visit(ctx.whereClause().cond()).search(document);
-            } catch (Exception e) {}
-            if (condition_list == null) checkValid = false;
-        }
-
-        if (checkValid) {
-            try {
-                res.addAll(visit(ctx.returnClause().xq()).search(document));
-            } catch (Exception e) {}
-        }
-
-        return new VarXq(res);
+        return new FunctionXq(res);
     }
 
+    public void functionXq_handler(XQueryParser.FunctionXqContext ctx, int k, List<Node> res) throws Exception {
 
+        // The termination base case is when k equals the size of all forClause, we then handle the let, where, and return
+        if (k == ctx.forClause().Var().size()) {
+
+            if (ctx.letClause() != null) {
+                // If there is let clause, we try to update map according to the current for clause status
+                List<TerminalNode> name_list = ctx.letClause().Var();
+                List<XQueryParser.XqContext> xq_list = ctx.letClause().xq();
+                for (int i = 0; i < name_list.size(); i++) {
+                    List<Node> nodes = visit(xq_list.get(i)).search(document);
+                    map.put(name_list.get(i).getText(), nodes);
+                }
+            }
+
+            if (ctx.whereClause() == null ) {
+                // Based on return clause, use search to get all answer nodes, add to res list
+                res.addAll(visit(ctx.returnClause().xq()).search(document));
+            } else {
+                List<Node> condition_list = visit(ctx.whereClause().cond()).search(document);
+                if (condition_list != null && condition_list.size() != 0) {
+                    // Based on return clause, use search to get all answer nodes, add to res list
+                    res.addAll(visit(ctx.returnClause().xq()).search(document));
+                }
+            }
+            return;
+        }
+
+        // For each iteration, get the name and all corresponding node result
+        String name = ctx.forClause().Var(k).getText();
+        List<Node> node_list = visit(ctx.forClause().xq(k)).search(document);
+
+        // We use recursion to step by step loop through all possible combination of for clauses
+        for (Node item : node_list) {
+            // Each time we keep old map, and update up map with each for claus
+            Map<String, List<Node>> restore = new HashMap<>(map);
+            map.put(name, Arrays.asList(item));
+            // Then use recursion to next step (k+1)
+            functionXq_handler(ctx, k+1, res);
+            // When we return to last step, restore the map to origin.
+            map = restore;
+        }
+    }
 
 
 
