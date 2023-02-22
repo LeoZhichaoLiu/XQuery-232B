@@ -23,7 +23,7 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
     Map<String, List<Node>> map;
     // The builder to handle the XPath resolver
     ExpressionBuilder expressionBuilder;
-    // The document root to start building result
+    // The document for creating tag element and strConstant element
     Document document;
 
     public XQueryBuilder (Document document) throws Exception {
@@ -70,9 +70,9 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
     public XQuery visitSlashXq(XQueryParser.SlashXqContext ctx) {
         XPathLexer lexer = new XPathLexer(CharStreams.fromString(ctx.rp().getText()));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-        Expression rp = expressionBuilder.visit(new XPathParser(tokens).rp());
+        Expression rp = this.expressionBuilder.visit(new XPathParser(tokens).rp());
 
-        if (ctx.slash().getText().equals("/")) {
+        if (ctx.slash().getText().equals("//")) {
             return new SlashXq(visit(ctx.xq()), SlashXq.Operator.DSLASH, rp);
         }
         return new SlashXq(visit(ctx.xq()), SlashXq.Operator.SSLASH, rp);
@@ -94,10 +94,8 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
 
         // We need to return to original map after
         map = restore;
-
         return res;
     }
-
 
 
     @Override
@@ -137,7 +135,8 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
             }
 
             // Based on return clause, use search to get all answer nodes, add to res list
-            res.addAll(visit(ctx.returnClause().xq()).search(document));
+            List<Node> return_list = visit(ctx.returnClause().xq()).search(document);
+            res.addAll(return_list);
             return;
         }
 
@@ -157,6 +156,10 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         }
     }
 
+    @Override
+    public XQuery visitForClause(XQueryParser.ForClauseContext ctx) {
+        return visitChildren(ctx);
+    }
 
     @Override
     public XQuery visitLetClause(XQueryParser.LetClauseContext ctx) {
@@ -175,10 +178,27 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         return visitChildren(ctx);
     }
 
+    @Override
+    public XQuery visitWhereClause(XQueryParser.WhereClauseContext ctx) {
+        return visitChildren(ctx);
+    }
+
+    @Override
+    public XQuery visitReturnClause(XQueryParser.ReturnClauseContext ctx) {
+        return visitChildren(ctx);
+    }
 
 
 
 
+
+
+
+
+    /*
+     * Function for apXp to construct the ap using ExpressionBuilder, and return all nodes
+     * by its xpath
+     */
     public List<Node> Search(String query, DocumentBuilder documentBuilder) throws Exception{
 
         List<Node> cur_position = new ArrayList<>();
@@ -188,8 +208,8 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         XPathParser parser = new XPathParser(tokens);
         ParserRuleContext tree = parser.ap();
 
-        ExpressionBuilder expressionBuilder = new ExpressionBuilder();
-        expression.AbsolutePath root = (AbsolutePath) expressionBuilder.visit(tree);
+        // Use the expressionBuilder to visit the ap path
+        expression.AbsolutePath root = (AbsolutePath) this.expressionBuilder.visit(tree);
 
         //Interface for expressions
         File inputStream = new File(root.returnDoc());
@@ -199,5 +219,4 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         cur_position.add(doc);
         return root.search(cur_position);
     }
-
 }

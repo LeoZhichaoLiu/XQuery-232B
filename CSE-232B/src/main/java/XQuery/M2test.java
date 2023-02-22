@@ -55,6 +55,7 @@ public class M2test {
         Document document = documentBuilder.newDocument();
         // Create the new XQueryBuilder object, and start to visit xq tree (get xq root)
         XQueryBuilder xqueryBuilder = new XQueryBuilder(document);
+        // Visit the whole tree (functionXp), it will return root that save the result list
         XQuery root =  xqueryBuilder.visit(tree);
 
         // Use function search to return all the return nodes
