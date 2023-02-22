@@ -4,7 +4,7 @@ import java.util.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-public class VarXq implements XQuery{
+public class VarXq implements XQuery {
 
     final List<Node> var_list;
 

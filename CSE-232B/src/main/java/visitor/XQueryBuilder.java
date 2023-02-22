@@ -84,6 +84,23 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
     }
 
     @Override
+    public XQuery visitLetXq(XQueryParser.LetXqContext ctx) {
+
+        Map<String, List<Node>> restore = new HashMap<>(map);
+
+        // For letXq xQuery, we first visit its letClause to update map, then return xq
+        visit(ctx.letClause());
+        XQuery res = visit(ctx.xq());
+
+        // We need to return to original map after
+        map = restore;
+
+        return res;
+    }
+
+
+
+    @Override
     public XQuery visitFunctionXq(XQueryParser.FunctionXqContext ctx) {
 
         List<Node> res = new ArrayList<>();
@@ -108,25 +125,19 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         if (k == ctx.forClause().Var().size()) {
 
             if (ctx.letClause() != null) {
-                // If there is let clause, we try to update map according to the current for clause status
-                List<TerminalNode> name_list = ctx.letClause().Var();
-                List<XQueryParser.XqContext> xq_list = ctx.letClause().xq();
-                for (int i = 0; i < name_list.size(); i++) {
-                    List<Node> nodes = visit(xq_list.get(i)).search(document);
-                    map.put(name_list.get(i).getText(), nodes);
+                visit(ctx.letClause());
+            }
+
+            // If there isn't any satisfied condition in where, just return soon
+            if (ctx.whereClause() != null) {
+                List<Node> condition_list = visit(ctx.whereClause().cond()).search(document);
+                if (condition_list == null || condition_list.size() == 0) {
+                    return;
                 }
             }
 
-            if (ctx.whereClause() == null ) {
-                // Based on return clause, use search to get all answer nodes, add to res list
-                res.addAll(visit(ctx.returnClause().xq()).search(document));
-            } else {
-                List<Node> condition_list = visit(ctx.whereClause().cond()).search(document);
-                if (condition_list != null && condition_list.size() != 0) {
-                    // Based on return clause, use search to get all answer nodes, add to res list
-                    res.addAll(visit(ctx.returnClause().xq()).search(document));
-                }
-            }
+            // Based on return clause, use search to get all answer nodes, add to res list
+            res.addAll(visit(ctx.returnClause().xq()).search(document));
             return;
         }
 
@@ -144,6 +155,24 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
             // When we return to last step (finish the let where return), restore the map to origin.
             map = restore;
         }
+    }
+
+
+    @Override
+    public XQuery visitLetClause(XQueryParser.LetClauseContext ctx) {
+
+        // If there is let clause, we try to update map according to the current for clause status
+        List<TerminalNode> name_list = ctx.Var();
+        List<XQueryParser.XqContext> xq_list = ctx.xq();
+        for (int i = 0; i < name_list.size(); i++) {
+            List<Node> nodes = new ArrayList<>();
+            try {
+                nodes = visit(xq_list.get(i)).search(document);
+            } catch (Exception e) {}
+            map.put(name_list.get(i).getText(), nodes);
+        }
+
+        return visitChildren(ctx);
     }
 
 
