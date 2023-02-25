@@ -220,8 +220,22 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         XQuery finalCond=visit(ctx.cond());
         XQuery condQuery=null;
 
-        TerminalNode varList = ctx.Satisfies();
-        //to do
+        List<XQueryParser.XqContext>  queryList = ctx.xq();
+        List<TerminalNode> varList=ctx.Var();
+
+        if(varList==null||queryList==null||queryList.size()!=varList.size()){
+            throw new IllegalArgumentException();
+        }
+
+        for(int i=0;i<varList.size();i++){
+            try{
+                List<Node> values=visit(queryList.get(i)).search(document);
+                String name=varList.get(i).getText();
+                map.put(name,values);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         try{
             condQuery=new SomeCond(finalCond.search(document));
@@ -231,6 +245,29 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         return condQuery;
     }
 
+    @Override
+    public XQuery visitParaCond(XQueryParser.ParaCondContext ctx){
+        return new ParaCond(visit(ctx.xq()));
+    }
+
+    @Override
+    public XQuery visitLogicCond(XQueryParser.LogicCondContext ctx){
+        XQuery rp1=visit(ctx.xq(0));
+        XQuery rp2=visit(ctx.xq(1));
+        LogicFilter.Logic logic=null;
+
+        if (ctx.logic().getText().equals("OR")||ctx.logic().getText().equals("or")) {
+            logic=LogicFilter.Logic.OR;
+        }else if(ctx.logic().getText().equals("AND")||ctx.logic().getText().equals("and")){
+            logic=LogicFilter.Logic.AND;
+        }
+        return new LogicCond(rp1,logic,rp2);
+    }
+
+    @Override
+    public XQuery visitNotCond(XQueryParser.NotCondContext ctx) {
+        return new NotCond(visit(ctx.xq()));
+    }
 
 
     /*

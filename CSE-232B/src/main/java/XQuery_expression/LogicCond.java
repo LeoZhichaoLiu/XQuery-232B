@@ -10,16 +10,11 @@ import java.util.List;
 
 public class LogicCond implements XQuery {
 
-    public enum Logic {
-        AND,
-        OR;
-    }
-
     final XQuery xq1;
-    final Logic logic;
+    final LogicFilter.Logic logic;
     final XQuery xq2;
 
-    public LogicCond(XQuery xq1, Logic logic, XQuery xq2) {
+    public LogicCond(XQuery xq1, LogicFilter.Logic logic, XQuery xq2) {
         this.xq1 = xq1;
         this.logic = logic;
         this.xq2 = xq2;
@@ -36,7 +31,7 @@ public class LogicCond implements XQuery {
         List<Node> right = this.xq2.search(document);
         List<Node> res = new ArrayList<>();
 
-        if (this.logic == Logic.AND) {
+        if (this.logic == LogicFilter.Logic.AND) {
             for (Node ll : left) {
                 for (Node rr : right) {
                     if (ll.isSameNode(rr)) {
@@ -44,7 +39,7 @@ public class LogicCond implements XQuery {
                     }
                 }
             }
-        } else if (this.logic == Logic.OR) {
+        } else if (this.logic == LogicFilter.Logic.OR) {
             for (Node ll : left) {
                 if(!res.contains(ll)){
                     res.add(ll);
