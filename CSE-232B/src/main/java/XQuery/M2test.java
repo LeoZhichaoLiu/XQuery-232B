@@ -49,16 +49,12 @@ public class M2test {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
 
         XQueryParser parser = new XQueryParser(tokens);
-        // Get the xq tree of the whole Xquery string, using parser
         ParserRuleContext tree = parser.xq();
 
         Document document = documentBuilder.newDocument();
-        // Create the new XQueryBuilder object, and start to visit xq tree (get xq root)
         XQueryBuilder xqueryBuilder = new XQueryBuilder(document);
-        // Visit the whole tree (functionXp), it will return root that save the result list
         XQuery root =  xqueryBuilder.visit(tree);
 
-        // Use function search to return all the return nodes
         return root.search(document);
     }
 

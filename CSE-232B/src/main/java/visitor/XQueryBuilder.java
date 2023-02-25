@@ -188,10 +188,48 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         return visitChildren(ctx);
     }
 
+    @Override
+    public XQuery visitCompareCond(XQueryParser.CompareCondContext ctx){
+        XQuery rp1=visit(ctx.xq(0));
+        XQuery rp2=visit(ctx.xq(1));
+        DoubleFilter.Compare comp=null;
 
+        if (ctx.comp().getText().equals("=")) {
+            comp = DoubleFilter.Compare.EQ_N;
 
+        } else if (ctx.comp().getText().equals("eq")) {
+            comp = DoubleFilter.Compare.EQ;
 
+        } else if (ctx.comp().getText().equals("==")) {
+            comp = DoubleFilter.Compare.IS_N;
 
+        } else if (ctx.comp().getText().equals("is")) {
+            comp = DoubleFilter.Compare.IS;
+        }
+
+        return new CompareCond(rp1,comp,rp2);
+    }
+
+    @Override
+    public XQuery visitEmptyCond(XQueryParser.EmptyCondContext ctx){
+        return new EmptyCond(visit(ctx.xq()));
+    }
+
+    @Override
+    public XQuery visitSomeCond(XQueryParser.SomeCondContext ctx){
+        XQuery finalCond=visit(ctx.cond());
+        XQuery condQuery=null;
+
+        TerminalNode varList = ctx.Satisfies();
+        //to do
+
+        try{
+            condQuery=new SomeCond(finalCond.search(document));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return condQuery;
+    }
 
 
 

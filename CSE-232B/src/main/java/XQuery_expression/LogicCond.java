@@ -1,17 +1,27 @@
 package XQuery_expression;
 
+import expression.LogicFilter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class LogicCond implements XQuery{
+public class LogicCond implements XQuery {
+
+    public enum Logic {
+        AND,
+        OR;
+    }
+
     final XQuery xq1;
+    final Logic logic;
     final XQuery xq2;
 
-    public LogicCond(XQuery xq1, XQuery xq2) {
+    public LogicCond(XQuery xq1, Logic logic, XQuery xq2) {
         this.xq1 = xq1;
+        this.logic = logic;
         this.xq2 = xq2;
     }
 
@@ -22,15 +32,32 @@ public class LogicCond implements XQuery{
 
     @Override
     public List<Node> search(Document document) throws Exception {
-        List<Node> left=this.xq1.search(document);
-        List<Node> right=this.xq2.search(document);
-        for(Node l:left){
-            for(Node r:right){
-                if(l.isSameNode(r)){
-                    return Collections.emptyList();
+        List<Node> left = this.xq1.search(document);
+        List<Node> right = this.xq2.search(document);
+        List<Node> res = new ArrayList<>();
+
+        if (this.logic == Logic.AND) {
+            for (Node ll : left) {
+                for (Node rr : right) {
+                    if (ll.isSameNode(rr)) {
+                        res.add(ll);
+                    }
                 }
             }
+        } else if (this.logic == Logic.OR) {
+            for (Node ll : left) {
+                if(!res.contains(ll)){
+                    res.add(ll);
+                }
+            }
+            for(Node rr:right){
+                if(!res.contains(rr)){
+                    res.add(rr);
+                }
+            }
+        }else {
+            throw new Exception ("Logic Type is Wrong!");
         }
-        return null;
+        return res;
     }
 }
