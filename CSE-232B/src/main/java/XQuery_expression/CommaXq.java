@@ -16,10 +16,12 @@ public class CommaXq implements XQuery {
 
     @Override
     public List<Node> search (Document document) throws Exception {
+        List<Node> res = new ArrayList<>();
         List<Node> res1 = xq1.search(document);
         List<Node> res2 = xq2.search(document);
-        res1.addAll(res2);
-        return res1;
+        res.addAll(res1);
+        res.addAll(res2);
+        return res;
     }
 
     @Override

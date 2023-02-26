@@ -3,7 +3,6 @@
 package xQuery_parsers;
 
 
-
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -24,18 +23,6 @@ public interface XQueryListener extends ParseTreeListener {
 	 */
 	void exitCommaXq(XQueryParser.CommaXqContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code FunctionXq}
-	 * labeled alternative in {@link XQueryParser#xq}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunctionXq(XQueryParser.FunctionXqContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code FunctionXq}
-	 * labeled alternative in {@link XQueryParser#xq}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunctionXq(XQueryParser.FunctionXqContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code StrXq}
 	 * labeled alternative in {@link XQueryParser#xq}.
 	 * @param ctx the parse tree
@@ -47,6 +34,18 @@ public interface XQueryListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStrXq(XQueryParser.StrXqContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code FunctionXq}
+	 * labeled alternative in {@link XQueryParser#xq}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionXq(XQueryParser.FunctionXqContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code FunctionXq}
+	 * labeled alternative in {@link XQueryParser#xq}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionXq(XQueryParser.FunctionXqContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ParaXq}
 	 * labeled alternative in {@link XQueryParser#xq}.

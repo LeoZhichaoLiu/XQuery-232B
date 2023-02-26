@@ -38,7 +38,7 @@ public class CompareCond implements XQuery {
             for (Node n1 : left) {
                 for (Node n2 : right) {
                     if (n1.isEqualNode(n2)) {
-                        System.out.println("HHHHH");
+                        //System.out.println("HHHHH");
                         return Collections.EMPTY_LIST;
                     }
                 }

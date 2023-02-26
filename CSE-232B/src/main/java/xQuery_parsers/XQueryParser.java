@@ -147,6 +147,26 @@ public class XQueryParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
+	public static class StrXqContext extends XqContext {
+		public StringConstantContext stringConstant() {
+			return getRuleContext(StringConstantContext.class,0);
+		}
+		public StrXqContext(XqContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof XQueryListener ) ((XQueryListener)listener).enterStrXq(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof XQueryListener ) ((XQueryListener)listener).exitStrXq(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof XQueryVisitor ) return ((XQueryVisitor<? extends T>)visitor).visitStrXq(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
 	public static class FunctionXqContext extends XqContext {
 		public ForClauseContext forClause() {
 			return getRuleContext(ForClauseContext.class,0);
@@ -172,26 +192,6 @@ public class XQueryParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof XQueryVisitor ) return ((XQueryVisitor<? extends T>)visitor).visitFunctionXq(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class StrXqContext extends XqContext {
-		public StringConstantContext stringConstant() {
-			return getRuleContext(StringConstantContext.class,0);
-		}
-		public StrXqContext(XqContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof XQueryListener ) ((XQueryListener)listener).enterStrXq(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof XQueryListener ) ((XQueryListener)listener).exitStrXq(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof XQueryVisitor ) return ((XQueryVisitor<? extends T>)visitor).visitStrXq(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -360,44 +360,13 @@ public class XQueryParser extends Parser {
 			setState(68);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case For:
-				{
-				_localctx = new FunctionXqContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-
-				setState(39);
-				forClause();
-				setState(41);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-				if (_la==Let) {
-					{
-					setState(40);
-					letClause();
-					}
-				}
-
-				setState(44);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-				if (_la==Where) {
-					{
-					setState(43);
-					whereClause();
-					}
-				}
-
-				setState(46);
-				returnClause();
-				}
-				break;
 			case Var:
 				{
 				_localctx = new VarXqContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(48);
+
+				setState(39);
 				match(Var);
 				}
 				break;
@@ -406,7 +375,7 @@ public class XQueryParser extends Parser {
 				_localctx = new StrXqContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(49);
+				setState(40);
 				stringConstant();
 				}
 				break;
@@ -416,7 +385,7 @@ public class XQueryParser extends Parser {
 				_localctx = new ApXqContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(50);
+				setState(41);
 				ap();
 				}
 				break;
@@ -425,11 +394,11 @@ public class XQueryParser extends Parser {
 				_localctx = new ParaXqContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(51);
+				setState(42);
 				match(LPR);
-				setState(52);
+				setState(43);
 				xq(0);
-				setState(53);
+				setState(44);
 				match(RPR);
 				}
 				break;
@@ -438,24 +407,55 @@ public class XQueryParser extends Parser {
 				_localctx = new TagCurlyXqContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(55);
+				setState(46);
 				match(LTag);
-				setState(56);
+				setState(47);
 				tagName1();
-				setState(57);
+				setState(48);
 				match(RTag);
-				setState(58);
+				setState(49);
 				match(LCurly);
-				setState(59);
+				setState(50);
 				xq(0);
-				setState(60);
+				setState(51);
 				match(RCurly);
-				setState(61);
+				setState(52);
 				match(LTag);
-				setState(62);
+				setState(53);
 				tagName2();
-				setState(63);
+				setState(54);
 				match(RTag);
+				}
+				break;
+			case For:
+				{
+				_localctx = new FunctionXqContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(56);
+				forClause();
+				setState(58);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==Let) {
+					{
+					setState(57);
+					letClause();
+					}
+				}
+
+				setState(61);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==Where) {
+					{
+					setState(60);
+					whereClause();
+					}
+				}
+
+				setState(63);
+				returnClause();
 				}
 				break;
 			case Let:
@@ -489,11 +489,11 @@ public class XQueryParser extends Parser {
 						_localctx = new CommaXqContext(new XqContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_xq);
 						setState(70);
-						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
+						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(71);
 						match(COMMA);
 						setState(72);
-						xq(5);
+						xq(6);
 						}
 						break;
 					case 2:
@@ -501,7 +501,7 @@ public class XQueryParser extends Parser {
 						_localctx = new SlashXqContext(new XqContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_xq);
 						setState(73);
-						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
+						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 						setState(74);
 						slash();
 						setState(75);
@@ -2334,9 +2334,9 @@ public class XQueryParser extends Parser {
 	private boolean xq_sempred(XqContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 4);
+			return precpred(_ctx, 5);
 		case 1:
-			return precpred(_ctx, 3);
+			return precpred(_ctx, 4);
 		}
 		return true;
 	}
@@ -2373,11 +2373,11 @@ public class XQueryParser extends Parser {
 		"\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b\u0002"+
 		"\f\u0007\f\u0002\r\u0007\r\u0002\u000e\u0007\u000e\u0002\u000f\u0007\u000f"+
 		"\u0002\u0010\u0007\u0010\u0002\u0011\u0007\u0011\u0002\u0012\u0007\u0012"+
-		"\u0001\u0000\u0001\u0000\u0001\u0000\u0003\u0000*\b\u0000\u0001\u0000"+
-		"\u0003\u0000-\b\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000"+
 		"\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000"+
 		"\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000"+
 		"\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000"+
+		"\u0001\u0000\u0001\u0000\u0003\u0000;\b\u0000\u0001\u0000\u0003\u0000"+
+		">\b\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000"+
 		"\u0003\u0000E\b\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000"+
 		"\u0001\u0000\u0001\u0000\u0001\u0000\u0005\u0000N\b\u0000\n\u0000\f\u0000"+
 		"Q\t\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
@@ -2416,22 +2416,22 @@ public class XQueryParser extends Parser {
 		"\u0001\u0000\u0000\u0000\u001a\u00e2\u0001\u0000\u0000\u0000\u001c\u00e9"+
 		"\u0001\u0000\u0000\u0000\u001e\u00eb\u0001\u0000\u0000\u0000 \u00ee\u0001"+
 		"\u0000\u0000\u0000\"\u00f0\u0001\u0000\u0000\u0000$\u00f2\u0001\u0000"+
-		"\u0000\u0000&\'\u0006\u0000\uffff\uffff\u0000\')\u0003\u0002\u0001\u0000"+
-		"(*\u0003\u0004\u0002\u0000)(\u0001\u0000\u0000\u0000)*\u0001\u0000\u0000"+
-		"\u0000*,\u0001\u0000\u0000\u0000+-\u0003\u0006\u0003\u0000,+\u0001\u0000"+
-		"\u0000\u0000,-\u0001\u0000\u0000\u0000-.\u0001\u0000\u0000\u0000./\u0003"+
-		"\b\u0004\u0000/E\u0001\u0000\u0000\u00000E\u0005\u0005\u0000\u00001E\u0003"+
-		"\u0010\b\u00002E\u0003\u0012\t\u000034\u0005\u0015\u0000\u000045\u0003"+
-		"\u0000\u0000\u000056\u0005\u0016\u0000\u00006E\u0001\u0000\u0000\u0000"+
-		"78\u0005\u0006\u0000\u000089\u0003\f\u0006\u00009:\u0005\u0007\u0000\u0000"+
-		":;\u0005\b\u0000\u0000;<\u0003\u0000\u0000\u0000<=\u0005\t\u0000\u0000"+
-		"=>\u0005\u0006\u0000\u0000>?\u0003\u000e\u0007\u0000?@\u0005\u0007\u0000"+
+		"\u0000\u0000&\'\u0006\u0000\uffff\uffff\u0000\'E\u0005\u0005\u0000\u0000"+
+		"(E\u0003\u0010\b\u0000)E\u0003\u0012\t\u0000*+\u0005\u0015\u0000\u0000"+
+		"+,\u0003\u0000\u0000\u0000,-\u0005\u0016\u0000\u0000-E\u0001\u0000\u0000"+
+		"\u0000./\u0005\u0006\u0000\u0000/0\u0003\f\u0006\u000001\u0005\u0007\u0000"+
+		"\u000012\u0005\b\u0000\u000023\u0003\u0000\u0000\u000034\u0005\t\u0000"+
+		"\u000045\u0005\u0006\u0000\u000056\u0003\u000e\u0007\u000067\u0005\u0007"+
+		"\u0000\u00007E\u0001\u0000\u0000\u00008:\u0003\u0002\u0001\u00009;\u0003"+
+		"\u0004\u0002\u0000:9\u0001\u0000\u0000\u0000:;\u0001\u0000\u0000\u0000"+
+		";=\u0001\u0000\u0000\u0000<>\u0003\u0006\u0003\u0000=<\u0001\u0000\u0000"+
+		"\u0000=>\u0001\u0000\u0000\u0000>?\u0001\u0000\u0000\u0000?@\u0003\b\u0004"+
 		"\u0000@E\u0001\u0000\u0000\u0000AB\u0003\u0004\u0002\u0000BC\u0003\u0000"+
-		"\u0000\u0001CE\u0001\u0000\u0000\u0000D&\u0001\u0000\u0000\u0000D0\u0001"+
-		"\u0000\u0000\u0000D1\u0001\u0000\u0000\u0000D2\u0001\u0000\u0000\u0000"+
-		"D3\u0001\u0000\u0000\u0000D7\u0001\u0000\u0000\u0000DA\u0001\u0000\u0000"+
-		"\u0000EO\u0001\u0000\u0000\u0000FG\n\u0004\u0000\u0000GH\u0005\u001e\u0000"+
-		"\u0000HN\u0003\u0000\u0000\u0005IJ\n\u0003\u0000\u0000JK\u0003\u0018\f"+
+		"\u0000\u0001CE\u0001\u0000\u0000\u0000D&\u0001\u0000\u0000\u0000D(\u0001"+
+		"\u0000\u0000\u0000D)\u0001\u0000\u0000\u0000D*\u0001\u0000\u0000\u0000"+
+		"D.\u0001\u0000\u0000\u0000D8\u0001\u0000\u0000\u0000DA\u0001\u0000\u0000"+
+		"\u0000EO\u0001\u0000\u0000\u0000FG\n\u0005\u0000\u0000GH\u0005\u001e\u0000"+
+		"\u0000HN\u0003\u0000\u0000\u0006IJ\n\u0004\u0000\u0000JK\u0003\u0018\f"+
 		"\u0000KL\u0003\u0014\n\u0000LN\u0001\u0000\u0000\u0000MF\u0001\u0000\u0000"+
 		"\u0000MI\u0001\u0000\u0000\u0000NQ\u0001\u0000\u0000\u0000OM\u0001\u0000"+
 		"\u0000\u0000OP\u0001\u0000\u0000\u0000P\u0001\u0001\u0000\u0000\u0000"+
@@ -2518,7 +2518,7 @@ public class XQueryParser extends Parser {
 		"\u00ec\u00ed\u0005(\u0000\u0000\u00ed\u001f\u0001\u0000\u0000\u0000\u00ee"+
 		"\u00ef\u0007\u0001\u0000\u0000\u00ef!\u0001\u0000\u0000\u0000\u00f0\u00f1"+
 		"\u0007\u0002\u0000\u0000\u00f1#\u0001\u0000\u0000\u0000\u00f2\u00f3\u0007"+
-		"\u0003\u0000\u0000\u00f3%\u0001\u0000\u0000\u0000\u000f),DMO\\i\u0086"+
+		"\u0003\u0000\u0000\u00f3%\u0001\u0000\u0000\u0000\u000f:=DMO\\i\u0086"+
 		"\u0092\u009a\u00b2\u00c0\u00c2\u00d5\u00dd";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());

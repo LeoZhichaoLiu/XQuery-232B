@@ -21,19 +21,19 @@ public interface XQueryVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCommaXq(XQueryParser.CommaXqContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code FunctionXq}
-	 * labeled alternative in {@link XQueryParser#xq}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFunctionXq(XQueryParser.FunctionXqContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code StrXq}
 	 * labeled alternative in {@link XQueryParser#xq}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStrXq(XQueryParser.StrXqContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code FunctionXq}
+	 * labeled alternative in {@link XQueryParser#xq}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionXq(XQueryParser.FunctionXqContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ParaXq}
 	 * labeled alternative in {@link XQueryParser#xq}.

@@ -14,7 +14,12 @@ public class ApXq implements XQuery {
 
     @Override
     public List<Node> search (Document document) throws Exception {
-        return ap_list;
+        List<Node> res = new ArrayList<>();
+        for (Node node : ap_list) {
+            res.add(node.cloneNode(true));
+        }
+        return res;
+
     }
 
     @Override

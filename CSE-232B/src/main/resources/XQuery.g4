@@ -6,10 +6,10 @@ package xQuery_parsers;
 }
 
 /* Rules */
-xq: forClause (letClause)? (whereClause)? returnClause #FunctionXq
-    | Var #VarXq | stringConstant #StrXq | ap #ApXq
+xq: Var #VarXq | stringConstant #StrXq | ap #ApXq
     | LPR xq RPR #ParaXq | xq COMMA xq #CommaXq | xq slash rp #SlashXq
     | LTag tagName1 RTag LCurly xq RCurly LTag tagName2 RTag #TagCurlyXq
+    | forClause (letClause)? (whereClause)? returnClause #FunctionXq
     | letClause xq #LetXq;
 
 forClause: For Var In xq (COMMA Var In xq)*;

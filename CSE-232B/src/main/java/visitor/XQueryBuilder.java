@@ -26,12 +26,15 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
     // The document for creating tag element and strConstant element
     Document document;
     //Stack <Map<String, List<Node>>> stack;
+    DocumentBuilder docbuilder;
 
     public XQueryBuilder (Document document) throws Exception {
         this.map = new HashMap<>();
         this.expressionBuilder = new ExpressionBuilder();
-        this.document = document;
         //this.stack = new Stack();
+        DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
+        docbuilder = documentFactory.newDocumentBuilder();
+        this.document = document;
     }
 
     @Override
@@ -52,11 +55,9 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         List<Node> res = new ArrayList<>();
         //System.out.println("Enter Ap!!!");
         try {
-            DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder doc = documentFactory.newDocumentBuilder();
-            res = Search(ctx.ap().getText(), doc);
+            res = Search(ctx.ap().getText(), this.docbuilder);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return new ApXq(res);
     }
@@ -68,7 +69,7 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
 
     @Override
     public XQuery visitCommaXq(XQueryParser.CommaXqContext ctx) {
-        //System.out.println(ctx.xq(0).getText() + " " + ctx.xq(1).getText());
+        System.out.println(ctx.xq(0).getText() + "       " + ctx.xq(1).getText());
         return new CommaXq(visit(ctx.xq(0)), visit(ctx.xq(1)));
     }
 
@@ -114,7 +115,9 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
             // key idea is to use recursion to avoid duplicated counts in for clause
             // We pass res List to record all the return nodes according to return clause.
             functionXq_handler(ctx, 0, res);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return new FunctionXq(res);
     }
@@ -139,12 +142,9 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
                 List<Node> condition_list = visit(ctx.whereClause().cond()).search(document);
 
                 if (condition_list == null) {
-                    //System.out.println(ctx.returnClause().xq().getText());
                     return;
                 }
             }
-
-            //System.out.println(ctx.returnClause().xq().getText());
 
             // Based on return clause, use search to get all answer nodes, add to res list
             List<Node> return_list = visit(ctx.returnClause().xq()).search(document);
@@ -160,6 +160,8 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         for (Node item : node_list) {
             // Each time we keep old map, and update up map with each for claus
             Map<String, List<Node>> restore = new HashMap<>(map);
+
+            //System.out.println(name + "     " + k);
             //this.stack.push(restore);
             map.put(name, Arrays.asList(item));
 
@@ -244,8 +246,6 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         }
 
         map = restore;
-
-        //System.out.println(res);
         return new SomeCond(res);
     }
 
@@ -262,20 +262,13 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
             for (Node item : node_list) {
                 Map<String, List<Node>> restore = new HashMap<>(map);
                 map.put(name, Arrays.asList(item));
-                //boolean return_res = SomeCond_handler(ctx, k+1, res);
-
-                if (k + 1 <= ctx.Var().size()) {
-                    if (SomeCond_handler(ctx, k + 1, res)) {
-                        map = restore;
-                        return true;
-                    }
-                }
+                boolean return_res = SomeCond_handler(ctx, k+1, res);
 
                 map = restore;
-                //res = res | return_res;
+                res = res | return_res;
             }
         }
-        return false;
+        return res;
     }
 
     @Override
@@ -320,13 +313,15 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         expression.AbsolutePath root = (AbsolutePath) this.expressionBuilder.visit(tree);
 
         //Interface for expressions
-        //File inputStream = new File(root.returnDoc());
+        //File inputStream = new File("j_caesar2.xml");
+        //Document doc = documentBuilder.parse(inputStream);
 
-        //Document doc = this.documentBuilder.parse(inputStream);
         cur_position.add(this.document);
+        //cur_position.add(doc);
+
         List<Node> res = root.search(cur_position);
 
-        //System.out.println(res.size());
+        //System.out.println("Size is ========" + res.size());
         return res;
     }
 }

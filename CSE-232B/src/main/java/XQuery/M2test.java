@@ -52,10 +52,11 @@ public class M2test {
         ParserRuleContext tree = parser.xq();
 
         //Document document = documentBuilder.newDocument();
-        File inputStream = new File("j_caesar.xml");
+        File inputStream = new File("j_caesar2.xml");
         Document document = documentBuilder.parse(inputStream);
+
         XQueryBuilder xqueryBuilder = new XQueryBuilder(document);
-        XQuery root =  xqueryBuilder.visit(tree);
+        final XQuery root =  xqueryBuilder.visit(tree);
 
         return root.search(document);
     }
