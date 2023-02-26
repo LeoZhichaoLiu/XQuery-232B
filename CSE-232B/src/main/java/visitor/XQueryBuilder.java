@@ -25,27 +25,32 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
     ExpressionBuilder expressionBuilder;
     // The document for creating tag element and strConstant element
     Document document;
+    Stack <Map<String, List<Node>>> stack;
 
     public XQueryBuilder (Document document) throws Exception {
         this.map = new HashMap<>();
         this.expressionBuilder = new ExpressionBuilder();
         this.document = document;
+        this.stack = new Stack();
     }
 
     @Override
     public XQuery visitVarXq(XQueryParser.VarXqContext ctx) {
         List<Node> res = map.get(ctx.Var().getText());
-        return new VarXq(new ArrayList<>(res));
+        //System.out.println(ctx.Var().getText() + "   " + map.containsKey(ctx.Var().getText()));
+        return new VarXq(res);
     }
 
     @Override
     public XQuery visitStrXq(XQueryParser.StrXqContext ctx) {
-        return new StrXq(ctx.stringConstant().ID().getText());
+        String origin_string = ctx.stringConstant().getText();
+        return new StrXq(origin_string.substring(1, origin_string.length()-1));
     }
 
     @Override
     public XQuery visitApXq(XQueryParser.ApXqContext ctx) {
         List<Node> res = new ArrayList<>();
+        System.out.println("Enter Ap!!!");
         try {
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder doc = documentFactory.newDocumentBuilder();
@@ -63,6 +68,7 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
 
     @Override
     public XQuery visitCommaXq(XQueryParser.CommaXqContext ctx) {
+        System.out.println(ctx.xq(0).getText() + " " + ctx.xq(1).getText());
         return new CommaXq(visit(ctx.xq(0)), visit(ctx.xq(1)));
     }
 
@@ -110,7 +116,7 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
             functionXq_handler(ctx, 0, res);
         } catch (Exception e) {}
 
-        return new FunctionXq(res);
+        return new VarXq(res);
     }
 
 
@@ -129,10 +135,13 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
             // If there isn't any satisfied condition in where, just return soon
             if (ctx.whereClause() != null) {
                 List<Node> condition_list = visit(ctx.whereClause().cond()).search(document);
-                if (condition_list == null || condition_list.size() == 0) {
+
+                if (condition_list == null) {
                     return;
                 }
             }
+
+            //System.out.println(ctx.returnClause().xq().getText());
 
             // Based on return clause, use search to get all answer nodes, add to res list
             List<Node> return_list = visit(ctx.returnClause().xq()).search(document);
@@ -148,11 +157,14 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         for (Node item : node_list) {
             // Each time we keep old map, and update up map with each for claus
             Map<String, List<Node>> restore = new HashMap<>(map);
+            this.stack.push(restore);
+            //System.out.println(name);
             map.put(name, Arrays.asList(item));
             // Then use recursion to next step (k+1)
             functionXq_handler(ctx, k+1, res);
             // When we return to last step (finish the let where return), restore the map to origin.
-            map = restore;
+            map = this.stack.pop();
+            //map = restore;
         }
     }
 
@@ -190,24 +202,24 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
 
     @Override
     public XQuery visitCompareCond(XQueryParser.CompareCondContext ctx){
-        XQuery rp1=visit(ctx.xq(0));
-        XQuery rp2=visit(ctx.xq(1));
-        DoubleFilter.Compare comp=null;
+        XQuery xq1 = visit(ctx.xq(0));
+        XQuery xq2 = visit(ctx.xq(1));
+        DoubleFilter.Compare comp = null;
 
         if (ctx.comp().getText().equals("=")) {
-            comp = DoubleFilter.Compare.EQ_N;
-
-        } else if (ctx.comp().getText().equals("eq")) {
             comp = DoubleFilter.Compare.EQ;
 
+        } else if (ctx.comp().getText().equals("eq")) {
+            comp = DoubleFilter.Compare.EQ_N;
+
         } else if (ctx.comp().getText().equals("==")) {
-            comp = DoubleFilter.Compare.IS_N;
+            comp = DoubleFilter.Compare.IS;
 
         } else if (ctx.comp().getText().equals("is")) {
-            comp = DoubleFilter.Compare.IS;
+            comp = DoubleFilter.Compare.IS_N;
         }
 
-        return new CompareCond(rp1,comp,rp2);
+        return new CompareCond(xq1, comp, xq2);
     }
 
     @Override
@@ -247,13 +259,13 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
 
     @Override
     public XQuery visitParaCond(XQueryParser.ParaCondContext ctx){
-        return new ParaCond(visit(ctx.xq()));
+        return new ParaCond(visit(ctx.cond()));
     }
 
     @Override
     public XQuery visitLogicCond(XQueryParser.LogicCondContext ctx){
-        XQuery rp1=visit(ctx.xq(0));
-        XQuery rp2=visit(ctx.xq(1));
+        XQuery xq1=visit(ctx.cond(0));
+        XQuery xq2=visit(ctx.cond(1));
         LogicFilter.Logic logic=null;
 
         if (ctx.logic().getText().equals("OR")||ctx.logic().getText().equals("or")) {
@@ -261,12 +273,12 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         }else if(ctx.logic().getText().equals("AND")||ctx.logic().getText().equals("and")){
             logic=LogicFilter.Logic.AND;
         }
-        return new LogicCond(rp1,logic,rp2);
+        return new LogicCond(xq1,logic,xq2);
     }
 
     @Override
     public XQuery visitNotCond(XQueryParser.NotCondContext ctx) {
-        return new NotCond(visit(ctx.xq()));
+        return new NotCond(visit(ctx.cond()));
     }
 
 
@@ -287,11 +299,13 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         expression.AbsolutePath root = (AbsolutePath) this.expressionBuilder.visit(tree);
 
         //Interface for expressions
-        File inputStream = new File(root.returnDoc());
-        Document doc = documentBuilder.parse(inputStream);
+        //File inputStream = new File(root.returnDoc());
 
-        //System.out.println(doc.getDocumentElement().getNodeName());
-        cur_position.add(doc);
-        return root.search(cur_position);
+        //Document doc = this.documentBuilder.parse(inputStream);
+        cur_position.add(this.document);
+        List<Node> res = root.search(cur_position);
+
+        //System.out.println(res.size());
+        return res;
     }
 }

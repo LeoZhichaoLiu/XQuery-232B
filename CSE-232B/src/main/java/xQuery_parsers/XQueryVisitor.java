@@ -3,6 +3,7 @@
 package xQuery_parsers;
 
 
+
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -21,19 +22,19 @@ public interface XQueryVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCommaXq(XQueryParser.CommaXqContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code StrXq}
-	 * labeled alternative in {@link XQueryParser#xq}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStrXq(XQueryParser.StrXqContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code FunctionXq}
 	 * labeled alternative in {@link XQueryParser#xq}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitFunctionXq(XQueryParser.FunctionXqContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code StrXq}
+	 * labeled alternative in {@link XQueryParser#xq}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStrXq(XQueryParser.StrXqContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ParaXq}
 	 * labeled alternative in {@link XQueryParser#xq}.
@@ -101,33 +102,12 @@ public interface XQueryVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitReturnClause(XQueryParser.ReturnClauseContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code CompareCond}
-	 * labeled alternative in {@link XQueryParser#cond}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCompareCond(XQueryParser.CompareCondContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code EmptyCond}
-	 * labeled alternative in {@link XQueryParser#cond}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitEmptyCond(XQueryParser.EmptyCondContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code SomeCond}
 	 * labeled alternative in {@link XQueryParser#cond}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitSomeCond(XQueryParser.SomeCondContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ParaCond}
-	 * labeled alternative in {@link XQueryParser#cond}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitParaCond(XQueryParser.ParaCondContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code LogicCond}
 	 * labeled alternative in {@link XQueryParser#cond}.
@@ -143,6 +123,27 @@ public interface XQueryVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNotCond(XQueryParser.NotCondContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code EmptyCond}
+	 * labeled alternative in {@link XQueryParser#cond}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEmptyCond(XQueryParser.EmptyCondContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code CompareCond}
+	 * labeled alternative in {@link XQueryParser#cond}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCompareCond(XQueryParser.CompareCondContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ParaCond}
+	 * labeled alternative in {@link XQueryParser#cond}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParaCond(XQueryParser.ParaCondContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link XQueryParser#tagName1}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -154,6 +155,12 @@ public interface XQueryVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitTagName2(XQueryParser.TagName2Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link XQueryParser#stringConstant}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStringConstant(XQueryParser.StringConstantContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link XQueryParser#ap}.
 	 * @param ctx the parse tree
@@ -308,10 +315,4 @@ public interface XQueryVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitLogic(XQueryParser.LogicContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link XQueryParser#stringConstant}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStringConstant(XQueryParser.StringConstantContext ctx);
 }

@@ -11,14 +11,14 @@ import java.util.Collections;
 import java.util.List;
 
 public class CompareCond implements XQuery {
-    final XQuery rp1;
+    final XQuery xq1;
     final DoubleFilter.Compare cp;
-    final XQuery rp2;
+    final XQuery xq2;
 
-    public CompareCond(XQuery rp1, DoubleFilter.Compare cp, XQuery rp2) {
-        this.rp1 = rp1;
+    public CompareCond(XQuery xq1, DoubleFilter.Compare cp, XQuery xq2) {
+        this.xq1 = xq1;
         this.cp = cp;
-        this.rp2 = rp2;
+        this.xq2 = xq2;
     }
 
 
@@ -30,27 +30,29 @@ public class CompareCond implements XQuery {
     @Override
     //unsure about the asList part.
     public List<Node> search(Document document) throws Exception {
-        List<Node> left = this.rp1.search(document);
-        List<Node> right = this.rp2.search(document);
-        List<Node> res = new ArrayList<>();
+        List<Node> left = this.xq1.search(document);
+        List<Node> right = this.xq2.search(document);
+        //List<Node> res = new ArrayList<>();
 
         if (cp == DoubleFilter.Compare.EQ_N || cp == DoubleFilter.Compare.EQ) {
             for (Node n1 : left) {
                 for (Node n2 : right) {
-                    if (n1.isEqualNode(n2))
-                        res.add(n1);
+                    //System.out.println(n2.isEqualNode(document.createTextNode("JULIUS CAESAR")));
+                    if (n1.isEqualNode(n2)) {
+                        return Collections.EMPTY_LIST;
+                    }
                 }
             }
         } else if (cp == DoubleFilter.Compare.IS_N || cp == DoubleFilter.Compare.IS) {
             for (Node n1 : left) {
                 for (Node n2 : right) {
                     if (n1.isSameNode(n2))
-                        res.add(n1);
+                        return Collections.EMPTY_LIST;
                 }
             }
         }else{
             throw new Exception ("Compare Type is Wrong!");
         }
-        return res;
+        return null;
     }
 }

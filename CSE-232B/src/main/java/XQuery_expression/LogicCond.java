@@ -32,27 +32,20 @@ public class LogicCond implements XQuery {
         List<Node> res = new ArrayList<>();
 
         if (this.logic == LogicFilter.Logic.AND) {
-            for (Node ll : left) {
-                for (Node rr : right) {
-                    if (ll.isSameNode(rr)) {
-                        res.add(ll);
-                    }
-                }
+
+            if (left != null && right != null) {
+                return Collections.EMPTY_LIST;
             }
         } else if (this.logic == LogicFilter.Logic.OR) {
-            for (Node ll : left) {
-                if(!res.contains(ll)){
-                    res.add(ll);
-                }
+
+            if (left != null || right != null) {
+                return Collections.EMPTY_LIST;
             }
-            for(Node rr:right){
-                if(!res.contains(rr)){
-                    res.add(rr);
-                }
-            }
+
         }else {
             throw new Exception ("Logic Type is Wrong!");
         }
-        return res;
+
+        return null;
     }
 }

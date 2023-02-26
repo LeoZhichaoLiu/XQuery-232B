@@ -51,7 +51,9 @@ public class M2test {
         XQueryParser parser = new XQueryParser(tokens);
         ParserRuleContext tree = parser.xq();
 
-        Document document = documentBuilder.newDocument();
+        //Document document = documentBuilder.newDocument();
+        File inputStream = new File("j_caesar.xml");
+        Document document = documentBuilder.parse(inputStream);
         XQueryBuilder xqueryBuilder = new XQueryBuilder(document);
         XQuery root =  xqueryBuilder.visit(tree);
 
@@ -64,19 +66,20 @@ public class M2test {
         Document outputDoc = document.newDocument();
         outputDoc.setXmlStandalone(true);
 
-        Node resultTag = outputDoc.createElement("Result");
-        for (Node node : result) {
+        //Node resultTag = outputDoc.createElement("Result");
+        /*for (Node node : result) {
             if (node != null) {
                 resultTag.appendChild(outputDoc.importNode(node, true));
             }
-        }
-        outputDoc.appendChild(resultTag);
+        }*/
+        //outputDoc.appendChild(resultTag);
+        outputDoc.appendChild(outputDoc.importNode(result.get(0), true));
 
         TransformerFactory tfFactory = TransformerFactory.newInstance();
         Transformer tf = tfFactory.newTransformer();
         tf.setOutputProperty(OutputKeys.INDENT, "yes");
         tf.setOutputProperty(OutputKeys.STANDALONE, "yes");
-        tf.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+        //tf.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 
         DOMSource domSource = new DOMSource(outputDoc);
         StreamResult res = new StreamResult(new FileOutputStream(outputFile));

@@ -22,7 +22,7 @@ public class NotCond implements XQuery{
     @Override
     public List<Node> search(Document document) throws Exception {
         List<Node> res = this.xq.search(document);
-        if(res==null){
+        if (res == null){
             return Collections.emptyList();
         }
         return null;
