@@ -3,6 +3,7 @@
 package xQuery_parsers;
 
 
+
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -522,4 +523,14 @@ public interface XQueryListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitLogic(XQueryParser.LogicContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link XQueryParser#doc}.
+	 * @param ctx the parse tree
+	 */
+	void enterDoc(XQueryParser.DocContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link XQueryParser#doc}.
+	 * @param ctx the parse tree
+	 */
+	void exitDoc(XQueryParser.DocContext ctx);
 }

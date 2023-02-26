@@ -1,7 +1,7 @@
 grammar XPath;
 
 @header {
-package cse232b.parsers;
+package parsers;
 }
 
 /* Rules */
@@ -23,7 +23,7 @@ f:  rp #RpFilter
 
 /* Define term */
 slash: SSLASH | DSLASH;
-docName: DOC LPR '"' ID '.xml"' RPR;
+docName: doc LPR '"' ID '.xml"' RPR;
 
 tagName: ID;
 attrName: AT ID;
@@ -32,7 +32,7 @@ logic: AND | OR;
 
 stringConstant: '"' ID '"';
 
-DOC: [dD][oO][cC];
+doc: 'doc' | 'document';
 
 /*Tokens*/
 LPR: '(';

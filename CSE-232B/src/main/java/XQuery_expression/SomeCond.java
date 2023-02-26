@@ -3,18 +3,15 @@ package XQuery_expression;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class SomeCond implements XQuery{
-    final boolean cond;
 
-    public SomeCond(List<Node> cond) {
-        if(cond!=null){
-            this.cond = true;
-        }else{
-            this.cond = false;
-        }
+    boolean isSatisified;
+
+    public SomeCond(boolean isSatisified) {
+        //System.out.println(isSatisified);
+        this.isSatisified = isSatisified;
     }
 
 
@@ -25,8 +22,11 @@ public class SomeCond implements XQuery{
 
     @Override
     public List<Node> search(Document document) throws Exception {
-        if(this.cond){
+        //System.out.println(isSatisified);
+        if (this.isSatisified){
             return Collections.emptyList();
-        }else return null;
+        }
+
+        return null;
     }
 }

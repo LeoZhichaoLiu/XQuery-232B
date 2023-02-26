@@ -3,7 +3,6 @@
 package xQuery_parsers;
 
 
-
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -315,4 +314,10 @@ public interface XQueryVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitLogic(XQueryParser.LogicContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link XQueryParser#doc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDoc(XQueryParser.DocContext ctx);
 }

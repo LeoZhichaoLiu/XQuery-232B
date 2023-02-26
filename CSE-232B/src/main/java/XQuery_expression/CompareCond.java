@@ -37,8 +37,8 @@ public class CompareCond implements XQuery {
         if (cp == DoubleFilter.Compare.EQ_N || cp == DoubleFilter.Compare.EQ) {
             for (Node n1 : left) {
                 for (Node n2 : right) {
-                    //System.out.println(n2.isEqualNode(document.createTextNode("JULIUS CAESAR")));
                     if (n1.isEqualNode(n2)) {
+                        System.out.println("HHHHH");
                         return Collections.EMPTY_LIST;
                     }
                 }

@@ -20,6 +20,7 @@ public class TagCurlyXq implements XQuery {
 
         List<Node> input = xq.search(document);
         Node res_node = document.createElement(tag);
+
         for (Node item : input) {
             if (!Objects.isNull(item)) {
                 res_node.appendChild(item);

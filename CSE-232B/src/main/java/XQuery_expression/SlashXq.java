@@ -28,12 +28,14 @@ public class SlashXq implements XQuery {
 
         if (operator == Operator.SSLASH) {
 
-            return rp.search(res1);
+            Set<Node> clean_duplicate = new HashSet<>(rp.search(res1));
+            return new ArrayList<>(clean_duplicate);
 
         } else if (operator == Operator.DSLASH) {
 
             List<Node> children = searchDescendant(res1);
-            return rp.search(children);
+            Set<Node> clean_duplicate = new HashSet<>(rp.search(children));
+            return new ArrayList<>(clean_duplicate);
         }
 
         throw new Exception ("Compare has issue");

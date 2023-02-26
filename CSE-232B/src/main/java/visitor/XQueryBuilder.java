@@ -25,13 +25,13 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
     ExpressionBuilder expressionBuilder;
     // The document for creating tag element and strConstant element
     Document document;
-    Stack <Map<String, List<Node>>> stack;
+    //Stack <Map<String, List<Node>>> stack;
 
     public XQueryBuilder (Document document) throws Exception {
         this.map = new HashMap<>();
         this.expressionBuilder = new ExpressionBuilder();
         this.document = document;
-        this.stack = new Stack();
+        //this.stack = new Stack();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
     @Override
     public XQuery visitApXq(XQueryParser.ApXqContext ctx) {
         List<Node> res = new ArrayList<>();
-        System.out.println("Enter Ap!!!");
+        //System.out.println("Enter Ap!!!");
         try {
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder doc = documentFactory.newDocumentBuilder();
@@ -68,7 +68,7 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
 
     @Override
     public XQuery visitCommaXq(XQueryParser.CommaXqContext ctx) {
-        System.out.println(ctx.xq(0).getText() + " " + ctx.xq(1).getText());
+        //System.out.println(ctx.xq(0).getText() + " " + ctx.xq(1).getText());
         return new CommaXq(visit(ctx.xq(0)), visit(ctx.xq(1)));
     }
 
@@ -116,7 +116,7 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
             functionXq_handler(ctx, 0, res);
         } catch (Exception e) {}
 
-        return new VarXq(res);
+        return new FunctionXq(res);
     }
 
 
@@ -132,11 +132,14 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
                 visit(ctx.letClause());
             }
 
+            //System.out.println(ctx.returnClause().xq().getText());
+
             // If there isn't any satisfied condition in where, just return soon
             if (ctx.whereClause() != null) {
                 List<Node> condition_list = visit(ctx.whereClause().cond()).search(document);
 
                 if (condition_list == null) {
+                    //System.out.println(ctx.returnClause().xq().getText());
                     return;
                 }
             }
@@ -157,14 +160,15 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         for (Node item : node_list) {
             // Each time we keep old map, and update up map with each for claus
             Map<String, List<Node>> restore = new HashMap<>(map);
-            this.stack.push(restore);
-            //System.out.println(name);
+            //this.stack.push(restore);
             map.put(name, Arrays.asList(item));
+
             // Then use recursion to next step (k+1)
             functionXq_handler(ctx, k+1, res);
+
             // When we return to last step (finish the let where return), restore the map to origin.
-            map = this.stack.pop();
-            //map = restore;
+            //map = this.stack.pop();
+            map = restore;
         }
     }
 
@@ -229,32 +233,49 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
 
     @Override
     public XQuery visitSomeCond(XQueryParser.SomeCondContext ctx){
-        XQuery finalCond=visit(ctx.cond());
-        XQuery condQuery=null;
 
-        List<XQueryParser.XqContext>  queryList = ctx.xq();
-        List<TerminalNode> varList=ctx.Var();
+        boolean res = false;
 
-        if(varList==null||queryList==null||queryList.size()!=varList.size()){
-            throw new IllegalArgumentException();
-        }
-
-        for(int i=0;i<varList.size();i++){
-            try{
-                List<Node> values=visit(queryList.get(i)).search(document);
-                String name=varList.get(i).getText();
-                map.put(name,values);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        try{
-            condQuery=new SomeCond(finalCond.search(document));
+        Map<String, List<Node>> restore = new HashMap<>(map);
+        try {
+            res = SomeCond_handler(ctx, 0, false);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return condQuery;
+
+        map = restore;
+
+        //System.out.println(res);
+        return new SomeCond(res);
+    }
+
+
+    public boolean SomeCond_handler (XQueryParser.SomeCondContext ctx, int k, boolean res) throws Exception {
+
+        if (k == ctx.Var().size()) {
+            return visit(ctx.cond()) != null;
+        } else {
+
+            String name = ctx.Var(k).getText();
+            List<Node> node_list = visit(ctx.xq(k)).search(document);
+
+            for (Node item : node_list) {
+                Map<String, List<Node>> restore = new HashMap<>(map);
+                map.put(name, Arrays.asList(item));
+                //boolean return_res = SomeCond_handler(ctx, k+1, res);
+
+                if (k + 1 <= ctx.Var().size()) {
+                    if (SomeCond_handler(ctx, k + 1, res)) {
+                        map = restore;
+                        return true;
+                    }
+                }
+
+                map = restore;
+                //res = res | return_res;
+            }
+        }
+        return false;
     }
 
     @Override
