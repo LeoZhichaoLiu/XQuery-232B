@@ -83,7 +83,7 @@ public class M2test {
         TransformerFactory tfFactory = TransformerFactory.newInstance();
         Transformer tf = tfFactory.newTransformer();
         tf.setOutputProperty(OutputKeys.INDENT, "yes");
-        tf.setOutputProperty(OutputKeys.STANDALONE, "yes");
+        //tf.setOutputProperty(OutputKeys.STANDALONE, "yes");
 
         DOMSource domSource = new DOMSource(outputDoc);
         StreamResult res = new StreamResult(new FileOutputStream(outputFile));
