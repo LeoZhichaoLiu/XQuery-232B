@@ -4,6 +4,8 @@ grammar XPath;
 package parsers;
 }
 
+parse: ap+;
+
 /* Rules */
 ap: docName slash rp;
 
@@ -23,14 +25,14 @@ f:  rp #RpFilter
 
 /* Define term */
 slash: SSLASH | DSLASH;
-docName: doc LPR '"' ID '.xml"' RPR;
+docName: doc LPR STRING RPR;
 
 tagName: ID;
 attrName: AT ID;
 comp: EQ | EQ_N | IS | IS_N;
 logic: AND | OR;
 
-stringConstant: '"' ID '"';
+stringConstant: STRING;
 
 doc: 'doc' | 'document';
 
@@ -62,3 +64,25 @@ AT: '@';
 
 ID: [a-zA-Z][a-zA-Z_0-9]*;
 WS: [ \t\n\r]+ -> skip;
+
+STRING
+:
+   '"'
+   (
+      ESCAPE
+      | ~["\\]
+   )* '"'
+   | '\''
+   (
+      ESCAPE
+      | ~['\\]
+   )* '\''
+;
+
+ESCAPE
+:
+   '\\'
+   (
+      ['"\\]
+   )
+;

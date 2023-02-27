@@ -29,7 +29,6 @@ public class SlashXq implements XQuery {
         if (operator == Operator.SSLASH) {
 
             Set<Node> clean_duplicate = new HashSet<>(rp.search(res1));
-            //System.out.println(clean_duplicate.size());
             return new ArrayList<>(clean_duplicate);
 
         } else if (operator == Operator.DSLASH) {

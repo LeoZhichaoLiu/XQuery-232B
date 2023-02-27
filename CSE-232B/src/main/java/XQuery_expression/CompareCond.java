@@ -32,13 +32,11 @@ public class CompareCond implements XQuery {
     public List<Node> search(Document document) throws Exception {
         List<Node> left = this.xq1.search(document);
         List<Node> right = this.xq2.search(document);
-        //List<Node> res = new ArrayList<>();
 
         if (cp == DoubleFilter.Compare.EQ_N || cp == DoubleFilter.Compare.EQ) {
             for (Node n1 : left) {
                 for (Node n2 : right) {
                     if (n1.isEqualNode(n2)) {
-                        //System.out.println("HHHHH");
                         return Collections.EMPTY_LIST;
                     }
                 }

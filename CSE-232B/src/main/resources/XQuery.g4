@@ -5,10 +5,12 @@ import XPath;
 package xQuery_parsers;
 }
 
+parse: xq+;
+
 /* Rules */
 xq: Var #VarXq | stringConstant #StrXq | ap #ApXq
     | LPR xq RPR #ParaXq | xq COMMA xq #CommaXq | xq slash rp #SlashXq
-    | LTag tagName1 RTag LCurly xq RCurly LTag tagName2 RTag #TagCurlyXq
+    | LTag tagName1 RTag LCurly xq RCurly LTag SSLASH tagName2 RTag #TagCurlyXq
     | forClause (letClause)? (whereClause)? returnClause #FunctionXq
     | letClause xq #LetXq;
 

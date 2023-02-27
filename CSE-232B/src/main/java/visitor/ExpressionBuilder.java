@@ -9,7 +9,8 @@ public class ExpressionBuilder extends XPathBaseVisitor<Expression> {
     // Absolute Path
     @Override
     public Expression visitAp(XPathParser.ApContext ctx) {
-        String docName = ctx.docName().ID().getText();
+        String originName = ctx.docName().STRING().getText();
+        String docName = originName.substring(1, originName.length()-1);
 
         //System.out.println(docName);
 
@@ -136,7 +137,9 @@ public class ExpressionBuilder extends XPathBaseVisitor<Expression> {
     public Expression visitConstantFilter(XPathParser.ConstantFilterContext ctx) {
 
         Expression rp = visit(ctx.rp());
-        String constant = ctx.stringConstant().ID().getText();
+
+        String originName = ctx.stringConstant().STRING().getText();
+        String constant = originName.substring(1, originName.length()-1);
 
         //System.out.println(constant);
 

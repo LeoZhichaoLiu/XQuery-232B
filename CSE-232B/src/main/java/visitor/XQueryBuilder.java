@@ -25,13 +25,11 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
     ExpressionBuilder expressionBuilder;
     // The document for creating tag element and strConstant element
     Document document;
-    //Stack <Map<String, List<Node>>> stack;
     DocumentBuilder docbuilder;
 
     public XQueryBuilder (Document document) throws Exception {
         this.map = new HashMap<>();
         this.expressionBuilder = new ExpressionBuilder();
-        //this.stack = new Stack();
         DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
         docbuilder = documentFactory.newDocumentBuilder();
         this.document = document;
@@ -69,7 +67,7 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
 
     @Override
     public XQuery visitCommaXq(XQueryParser.CommaXqContext ctx) {
-        System.out.println(ctx.xq(0).getText() + "       " + ctx.xq(1).getText());
+        //System.out.println(ctx.xq(0).getText() + "       " + ctx.xq(1).getText());
         return new CommaXq(visit(ctx.xq(0)), visit(ctx.xq(1)));
     }
 
@@ -135,8 +133,6 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
                 visit(ctx.letClause());
             }
 
-            //System.out.println(ctx.returnClause().xq().getText());
-
             // If there isn't any satisfied condition in where, just return soon
             if (ctx.whereClause() != null) {
                 List<Node> condition_list = visit(ctx.whereClause().cond()).search(document);
@@ -160,23 +156,14 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         for (Node item : node_list) {
             // Each time we keep old map, and update up map with each for claus
             Map<String, List<Node>> restore = new HashMap<>(map);
-
-            //System.out.println(name + "     " + k);
-            //this.stack.push(restore);
             map.put(name, Arrays.asList(item));
 
             // Then use recursion to next step (k+1)
             functionXq_handler(ctx, k+1, res);
 
             // When we return to last step (finish the let where return), restore the map to origin.
-            //map = this.stack.pop();
             map = restore;
         }
-    }
-
-    @Override
-    public XQuery visitForClause(XQueryParser.ForClauseContext ctx) {
-        return visitChildren(ctx);
     }
 
     @Override
@@ -193,16 +180,6 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
             map.put(name_list.get(i).getText(), nodes);
         }
 
-        return visitChildren(ctx);
-    }
-
-    @Override
-    public XQuery visitWhereClause(XQueryParser.WhereClauseContext ctx) {
-        return visitChildren(ctx);
-    }
-
-    @Override
-    public XQuery visitReturnClause(XQueryParser.ReturnClauseContext ctx) {
         return visitChildren(ctx);
     }
 

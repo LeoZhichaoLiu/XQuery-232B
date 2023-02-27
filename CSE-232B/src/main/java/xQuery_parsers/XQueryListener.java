@@ -11,6 +11,16 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface XQueryListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link XQueryParser#parse}.
+	 * @param ctx the parse tree
+	 */
+	void enterParse(XQueryParser.ParseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link XQueryParser#parse}.
+	 * @param ctx the parse tree
+	 */
+	void exitParse(XQueryParser.ParseContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code CommaXq}
 	 * labeled alternative in {@link XQueryParser#xq}.
 	 * @param ctx the parse tree

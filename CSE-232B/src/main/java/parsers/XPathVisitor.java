@@ -13,6 +13,12 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface XPathVisitor<T> extends ParseTreeVisitor<T> {
 	/**
+	 * Visit a parse tree produced by {@link XPathParser#parse}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParse(XPathParser.ParseContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link XPathParser#ap}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

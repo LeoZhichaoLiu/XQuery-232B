@@ -21,15 +21,12 @@ public class TagCurlyXq implements XQuery {
     public List<Node> search (Document document) throws Exception {
 
         List<Node> input = xq.search(document);
-
         //DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
         //DocumentBuilder docBuilder = documentFactory.newDocumentBuilder();
         //Document doc = docBuilder.newDocument();
 
         Node res_node = document.createElement(tag);
         //Node res_node = doc.createElement(tag);
-
-        //System.out.println(tag + " " + input.size());
 
         for (Node item : input) {
             if (!Objects.isNull(item)) {

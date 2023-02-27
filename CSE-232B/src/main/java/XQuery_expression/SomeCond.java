@@ -10,7 +10,6 @@ public class SomeCond implements XQuery{
     boolean isSatisified;
 
     public SomeCond(boolean isSatisified) {
-        //System.out.println(isSatisified);
         this.isSatisified = isSatisified;
     }
 
@@ -22,7 +21,6 @@ public class SomeCond implements XQuery{
 
     @Override
     public List<Node> search(Document document) throws Exception {
-        //System.out.println(isSatisified);
         if (this.isSatisified){
             return Collections.emptyList();
         }

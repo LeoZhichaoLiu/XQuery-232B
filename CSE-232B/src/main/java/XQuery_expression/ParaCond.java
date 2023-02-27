@@ -7,10 +7,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class ParaCond implements XQuery{
-    final XQuery xq;
+    final XQuery cond;
 
-    public ParaCond(XQuery xq) {
-        this.xq = xq;
+    public ParaCond(XQuery cond) {
+        this.cond = cond;
     }
 
     @Override
@@ -20,6 +20,6 @@ public class ParaCond implements XQuery{
 
     @Override
     public List<Node> search(Document document) throws Exception {
-        return this.xq.search(document);
+        return this.cond.search(document);
     }
 }

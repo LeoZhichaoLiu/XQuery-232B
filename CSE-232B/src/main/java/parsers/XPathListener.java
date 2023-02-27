@@ -10,6 +10,16 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface XPathListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link XPathParser#parse}.
+	 * @param ctx the parse tree
+	 */
+	void enterParse(XPathParser.ParseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link XPathParser#parse}.
+	 * @param ctx the parse tree
+	 */
+	void exitParse(XPathParser.ParseContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link XPathParser#ap}.
 	 * @param ctx the parse tree
 	 */

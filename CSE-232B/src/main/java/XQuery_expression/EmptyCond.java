@@ -21,8 +21,8 @@ public class EmptyCond implements XQuery{
 
     @Override
     public List<Node> search(Document document) throws Exception {
-        List<Node> res = this.xq.search(document);
-        if(res==null||res.isEmpty()){
+        List <Node> check_empty = this.xq.search(document);
+        if ( check_empty == null || check_empty.isEmpty() ){
             return Collections.emptyList();
         }
         return null;

@@ -10,14 +10,14 @@ import java.util.List;
 
 public class LogicCond implements XQuery {
 
-    final XQuery xq1;
+    final XQuery cond1;
     final LogicFilter.Logic logic;
-    final XQuery xq2;
+    final XQuery cond2;
 
-    public LogicCond(XQuery xq1, LogicFilter.Logic logic, XQuery xq2) {
-        this.xq1 = xq1;
+    public LogicCond(XQuery cond1, LogicFilter.Logic logic, XQuery cond2) {
+        this.cond1 = cond1;
         this.logic = logic;
-        this.xq2 = xq2;
+        this.cond2 = cond2;
     }
 
     @Override
@@ -27,22 +27,22 @@ public class LogicCond implements XQuery {
 
     @Override
     public List<Node> search(Document document) throws Exception {
-        List<Node> left = this.xq1.search(document);
-        List<Node> right = this.xq2.search(document);
-        List<Node> res = new ArrayList<>();
+        List<Node> left = this.cond1.search(document);
+        List<Node> right = this.cond2.search(document);
 
         if (this.logic == LogicFilter.Logic.AND) {
 
             if (left != null && right != null) {
                 return Collections.EMPTY_LIST;
             }
+
         } else if (this.logic == LogicFilter.Logic.OR) {
 
             if (left != null || right != null) {
                 return Collections.EMPTY_LIST;
             }
 
-        }else {
+        } else {
             throw new Exception ("Logic Type is Wrong!");
         }
 

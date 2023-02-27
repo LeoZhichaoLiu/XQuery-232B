@@ -8,10 +8,10 @@ import java.util.List;
 
 public class NotCond implements XQuery{
 
-    final XQuery xq;
+    final XQuery cond;
 
-    public NotCond(XQuery xq) {
-        this.xq = xq;
+    public NotCond(XQuery cond) {
+        this.cond = cond;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class NotCond implements XQuery{
 
     @Override
     public List<Node> search(Document document) throws Exception {
-        List<Node> res = this.xq.search(document);
+        List<Node> res = this.cond.search(document);
         if (res == null){
             return Collections.emptyList();
         }
