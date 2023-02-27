@@ -65,7 +65,7 @@ public class M2test {
         DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder document = documentFactory.newDocumentBuilder();
         Document outputDoc = document.newDocument();
-        outputDoc.setXmlStandalone(true);
+        //outputDoc.setXmlStandalone(true);
 
         if (result.size() == 1) {
             outputDoc.appendChild(outputDoc.importNode(result.get(0), true));

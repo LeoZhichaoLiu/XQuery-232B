@@ -17,6 +17,7 @@ public class ApXq implements XQuery {
         List<Node> res = new ArrayList<>();
         for (Node node : ap_list) {
             res.add(node.cloneNode(true));
+            //res.add(node);
         }
         return res;
 
