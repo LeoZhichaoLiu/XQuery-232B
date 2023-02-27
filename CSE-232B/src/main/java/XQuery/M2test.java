@@ -67,7 +67,18 @@ public class M2test {
         Document outputDoc = document.newDocument();
         outputDoc.setXmlStandalone(true);
 
-        outputDoc.appendChild(outputDoc.importNode(result.get(0), true));
+        if (result.size() == 1) {
+            outputDoc.appendChild(outputDoc.importNode(result.get(0), true));
+
+        } else if (result.size() != 0){
+            Node resultTag = outputDoc.createElement("result");
+            for (Node node : result) {
+                if (node != null) {
+                    resultTag.appendChild(outputDoc.importNode(node, true));
+                }
+            }
+            outputDoc.appendChild(resultTag);
+        }
 
         TransformerFactory tfFactory = TransformerFactory.newInstance();
         Transformer tf = tfFactory.newTransformer();
