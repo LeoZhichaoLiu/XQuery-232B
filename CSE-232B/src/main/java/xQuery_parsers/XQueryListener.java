@@ -81,6 +81,18 @@ public interface XQueryListener extends ParseTreeListener {
 	 */
 	void exitApXq(XQueryParser.ApXqContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code JoinXq}
+	 * labeled alternative in {@link XQueryParser#xq}.
+	 * @param ctx the parse tree
+	 */
+	void enterJoinXq(XQueryParser.JoinXqContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code JoinXq}
+	 * labeled alternative in {@link XQueryParser#xq}.
+	 * @param ctx the parse tree
+	 */
+	void exitJoinXq(XQueryParser.JoinXqContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code VarXq}
 	 * labeled alternative in {@link XQueryParser#xq}.
 	 * @param ctx the parse tree
@@ -128,6 +140,36 @@ public interface XQueryListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTagCurlyXq(XQueryParser.TagCurlyXqContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link XQueryParser#joinClause}.
+	 * @param ctx the parse tree
+	 */
+	void enterJoinClause(XQueryParser.JoinClauseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link XQueryParser#joinClause}.
+	 * @param ctx the parse tree
+	 */
+	void exitJoinClause(XQueryParser.JoinClauseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link XQueryParser#attrList}.
+	 * @param ctx the parse tree
+	 */
+	void enterAttrList(XQueryParser.AttrListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link XQueryParser#attrList}.
+	 * @param ctx the parse tree
+	 */
+	void exitAttrList(XQueryParser.AttrListContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link XQueryParser#attrName}.
+	 * @param ctx the parse tree
+	 */
+	void enterAttrName(XQueryParser.AttrNameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link XQueryParser#attrName}.
+	 * @param ctx the parse tree
+	 */
+	void exitAttrName(XQueryParser.AttrNameContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link XQueryParser#forClause}.
 	 * @param ctx the parse tree
@@ -502,16 +544,6 @@ public interface XQueryListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTagName(XQueryParser.TagNameContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link XQueryParser#attrName}.
-	 * @param ctx the parse tree
-	 */
-	void enterAttrName(XQueryParser.AttrNameContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link XQueryParser#attrName}.
-	 * @param ctx the parse tree
-	 */
-	void exitAttrName(XQueryParser.AttrNameContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link XQueryParser#comp}.
 	 * @param ctx the parse tree

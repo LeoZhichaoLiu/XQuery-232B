@@ -22,6 +22,7 @@ public interface XQuery {
         SlashXq,
         TagCurlyXq,
         FunctionXq,
+        JoinXq,
         LetXq,
         forClause,
         letClause,

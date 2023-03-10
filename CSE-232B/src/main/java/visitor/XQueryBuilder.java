@@ -36,6 +36,30 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
     }
 
     @Override
+    public XQuery visitJoinXq(XQueryParser.JoinXqContext ctx) {
+        return visit(ctx.joinClause());
+    }
+
+    @Override
+    public XQuery visitJoinClause(XQueryParser.JoinClauseContext ctx) {
+        XQuery first = visit(ctx.xq(0));
+        XQuery second = visit(ctx.xq(1));
+
+        List<String> attrList1 = new ArrayList<>();
+        List<String> attrList2 = new ArrayList<>();
+
+        for (int i = 0; i < ctx.attrList(0).attrName().size(); i++) {
+            attrList1.add(ctx.attrList(0).attrName(i).ID().getText());
+        }
+
+        for (int i = 0; i < ctx.attrList(1).attrName().size(); i++) {
+            attrList2.add(ctx.attrList(1).attrName(i).ID().getText());
+        }
+
+        return new JoinXq(first, second, attrList1, attrList2);
+    }
+
+    @Override
     public XQuery visitVarXq(XQueryParser.VarXqContext ctx) {
         List<Node> res = map.get(ctx.Var().getText());
         //System.out.println(ctx.Var().getText() + "   " + map.containsKey(ctx.Var().getText()));

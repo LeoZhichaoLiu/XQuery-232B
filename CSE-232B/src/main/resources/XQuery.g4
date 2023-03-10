@@ -12,7 +12,15 @@ xq: Var #VarXq | stringConstant #StrXq | ap #ApXq
     | LPR xq RPR #ParaXq | xq COMMA xq #CommaXq | xq slash rp #SlashXq
     | LTag tagName1 RTag LCurly xq RCurly LTag SSLASH tagName2 RTag #TagCurlyXq
     | forClause (letClause)? (whereClause)? returnClause #FunctionXq
-    | letClause xq #LetXq;
+    | letClause xq #LetXq
+    | joinClause #JoinXq;
+
+/* new definition for join clause */
+joinClause: 'join' LPR xq COMMA xq COMMA attrList COMMA attrList RPR;
+
+attrList: LSB attrName (COMMA attrName)* RSB;
+
+attrName: ID;
 
 forClause: For Var In xq (COMMA Var In xq)*;
 
