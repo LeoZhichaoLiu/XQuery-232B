@@ -1,6 +1,6 @@
 // Generated from java-escape by ANTLR 4.11.1
 
-package cse232b.parsers;
+package parsers;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -281,4 +281,14 @@ public interface XPathListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStringConstant(XPathParser.StringConstantContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link XPathParser#doc}.
+	 * @param ctx the parse tree
+	 */
+	void enterDoc(XPathParser.DocContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link XPathParser#doc}.
+	 * @param ctx the parse tree
+	 */
+	void exitDoc(XPathParser.DocContext ctx);
 }

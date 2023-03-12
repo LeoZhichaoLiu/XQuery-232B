@@ -1,6 +1,6 @@
 // Generated from java-escape by ANTLR 4.11.1
 
-package cse232b.parsers;
+package parsers;
 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -172,4 +172,10 @@ public interface XPathVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitStringConstant(XPathParser.StringConstantContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link XPathParser#doc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDoc(XPathParser.DocContext ctx);
 }
