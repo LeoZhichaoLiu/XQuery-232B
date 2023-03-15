@@ -55,13 +55,6 @@ public class M3test {
         XQueryParser parser = new XQueryParser(tokens);
         ParserRuleContext tree = parser.xq();
 
-        //Document document = documentBuilder.newDocument();
-        //File inputStream = new File("j_caesar.xml");
-        //Document document = documentBuilder.parse(inputStream);
-
-        //XQueryBuilder xqueryBuilder = new XQueryBuilder(document);
-        //final XQuery root = xqueryBuilder.visit(tree);
-
         JoinOptimization joinModifier = new JoinOptimization();
         String join_query = joinModifier.rewrite((XQueryParser.FunctionXqContext) tree);
 
