@@ -51,7 +51,7 @@ public class M2test {
         XQueryParser parser = new XQueryParser(tokens);
         ParserRuleContext tree = parser.xq();
 
-        //Document document = documentBuilder.newDocument();
+//        Document document = documentBuilder.newDocument();
         File inputStream = new File("j_caesar.xml");
         Document document = documentBuilder.parse(inputStream);
 

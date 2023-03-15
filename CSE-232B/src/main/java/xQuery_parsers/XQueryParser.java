@@ -173,6 +173,7 @@ public class XQueryParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class XqContext extends ParserRuleContext {
+
 		public XqContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -182,6 +183,7 @@ public class XQueryParser extends Parser {
 		public void copyFrom(XqContext ctx) {
 			super.copyFrom(ctx);
 		}
+
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class CommaXqContext extends XqContext {
@@ -427,7 +429,7 @@ public class XQueryParser extends Parser {
 		return xq(0);
 	}
 
-	private XqContext xq(int _p) throws RecognitionException {
+	public XqContext xq(int _p) throws RecognitionException {
 		ParserRuleContext _parentctx = _ctx;
 		int _parentState = getState();
 		XqContext _localctx = new XqContext(_ctx, _parentState);
