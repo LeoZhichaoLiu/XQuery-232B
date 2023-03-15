@@ -1,15 +1,11 @@
 package XQuery_expression;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.*;
 import org.w3c.dom.*;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 public class JoinXq implements XQuery {
 
@@ -58,10 +54,13 @@ public class JoinXq implements XQuery {
             return res;
         }
 
+        //System.out.println(res1.size());
+
         // put xq1's result into hash_table with arrtList1's standard
         for (Node node : res1) {
             String hash_key = calculateKey(node, attrList1, tf);
 
+            //System.out.println(hash_key);
             if (!hash_table.containsKey(hash_key)) {
                 List<Node> list = new ArrayList<>();
                 list.add(node);
@@ -72,11 +71,17 @@ public class JoinXq implements XQuery {
             }
         }
 
+        //System.out.println(hash_table.size());
+        for (String item : hash_table.keySet()) {
+            //System.out.println(item);
+        }
+
         // Then search xq2's result, combine every matching results with matched xq1
         for (Node node : res2) {
 
             // For each xq2, try to calculate its hash_key, find its matched xq1, and put them into tuple tag.
-            String hash_key = calculateKey(node, attrList1, tf);
+            String hash_key = calculateKey(node, attrList2, tf);
+            //System.out.println(hash_key);
 
             // Use hash_table (which record xq1's information) to find the match xq1 with each xq2
             if (hash_table.containsKey(hash_key)) {
@@ -116,33 +121,22 @@ public class JoinXq implements XQuery {
         // We use map to record each string to each children node
         for (int i = 0; i < child_list.getLength(); i++) {
             String child_name = child_list.item(i).getNodeName();
-            str_node_map.put(child_name, child_list.item(i).getFirstChild());
+            //System.out.println(child_name);
+            str_node_map.put(child_name, child_list.item(i));
         }
 
         // Then for each attribute name, we try to extract the matched node, and convert it to
         // String
         StringBuffer sb = new StringBuffer();
         for (String str : attrList) {
-            Node item = str_node_map.get(str);
-            String node_str = node2Str(item, tf);
-            sb.append(node_str);
+            Node item = str_node_map.get(str.substring(1));
+            String node_str = item.getTextContent();
+            sb.append("@" + node_str);
+            //System.out.println(node_str);
+            //System.out.println();
         }
 
-        return sb.toString();
-    }
-
-    /*
-     * Method to convert node to String
-     */
-    public String node2Str (Node node, Transformer tf) throws Exception {
-
-        StringBuffer sb = new StringBuffer();
-        DOMSource domSource = new DOMSource(node);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        StreamResult res = new StreamResult(new PrintStream(stream));
-        tf.transform(domSource, res);
-        sb.append(stream.toString("UTF8"));
-        sb.append("====");
+        //System.out.println(sb.toString());
 
         return sb.toString();
     }

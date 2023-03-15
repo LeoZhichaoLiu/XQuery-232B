@@ -62,7 +62,7 @@ IS: 'is';
 TEXT: 'text()';
 AT: '@';
 
-ID: [a-zA-Z][a-zA-Z_0-9]*;
+ID: [a-zA-Z0-9_-]+;
 WS: [ \t\n\r]+ -> skip;
 
 STRING

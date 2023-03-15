@@ -49,11 +49,11 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         List<String> attrList2 = new ArrayList<>();
 
         for (int i = 0; i < ctx.attrList(0).attrName().size(); i++) {
-            attrList1.add(ctx.attrList(0).attrName(i).ID().getText());
+            attrList1.add(ctx.attrList(0).attrName(i).Var().getText());
         }
 
         for (int i = 0; i < ctx.attrList(1).attrName().size(); i++) {
-            attrList2.add(ctx.attrList(1).attrName(i).ID().getText());
+            attrList2.add(ctx.attrList(1).attrName(i).Var().getText());
         }
 
         return new JoinXq(first, second, attrList1, attrList2);
@@ -168,6 +168,7 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
 
             // Based on return clause, use search to get all answer nodes, add to res list
             List<Node> return_list = visit(ctx.returnClause().xq()).search(document);
+            //System.out.println(return_list.get(0).getTextContent());
             res.addAll(return_list);
             return;
         }
@@ -254,7 +255,8 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
     public boolean SomeCond_handler (XQueryParser.SomeCondContext ctx, int k, boolean res) throws Exception {
 
         if (k == ctx.Var().size()) {
-            return visit(ctx.cond()) != null;
+            return visit(ctx.cond()).search(document) != null;
+
         } else {
 
             String name = ctx.Var(k).getText();

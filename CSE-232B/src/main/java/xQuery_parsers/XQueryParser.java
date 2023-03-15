@@ -778,7 +778,7 @@ public class XQueryParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class AttrNameContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(XQueryParser.ID, 0); }
+		public TerminalNode Var() { return getToken(XQueryParser.Var, 0); }
 		public AttrNameContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -805,7 +805,7 @@ public class XQueryParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(117);
-			match(ID);
+			match(Var);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1839,8 +1839,8 @@ public class XQueryParser extends Parser {
 			{
 			setState(215);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,12,_ctx) ) {
-			case 1:
+			switch (_input.LA(1)) {
+			case ID:
 				{
 				_localctx = new TagContext(_localctx);
 				_ctx = _localctx;
@@ -1850,7 +1850,7 @@ public class XQueryParser extends Parser {
 				tagName();
 				}
 				break;
-			case 2:
+			case STAR:
 				{
 				_localctx = new AllContext(_localctx);
 				_ctx = _localctx;
@@ -1859,7 +1859,7 @@ public class XQueryParser extends Parser {
 				match(STAR);
 				}
 				break;
-			case 3:
+			case CURRENT:
 				{
 				_localctx = new CurrentContext(_localctx);
 				_ctx = _localctx;
@@ -1868,7 +1868,7 @@ public class XQueryParser extends Parser {
 				match(CURRENT);
 				}
 				break;
-			case 4:
+			case PARENT:
 				{
 				_localctx = new ParentContext(_localctx);
 				_ctx = _localctx;
@@ -1877,7 +1877,7 @@ public class XQueryParser extends Parser {
 				match(PARENT);
 				}
 				break;
-			case 5:
+			case TEXT:
 				{
 				_localctx = new TextContext(_localctx);
 				_ctx = _localctx;
@@ -1886,7 +1886,7 @@ public class XQueryParser extends Parser {
 				match(TEXT);
 				}
 				break;
-			case 6:
+			case Var:
 				{
 				_localctx = new AttributeContext(_localctx);
 				_ctx = _localctx;
@@ -1895,7 +1895,7 @@ public class XQueryParser extends Parser {
 				attrName();
 				}
 				break;
-			case 7:
+			case LPR:
 				{
 				_localctx = new ParaRpContext(_localctx);
 				_ctx = _localctx;
@@ -1908,6 +1908,8 @@ public class XQueryParser extends Parser {
 				match(RPR);
 				}
 				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
 			setState(231);
@@ -2692,7 +2694,7 @@ public class XQueryParser extends Parser {
 		"\b\u0004\u0000nl\u0001\u0000\u0000\u0000or\u0001\u0000\u0000\u0000pn\u0001"+
 		"\u0000\u0000\u0000pq\u0001\u0000\u0000\u0000qs\u0001\u0000\u0000\u0000"+
 		"rp\u0001\u0000\u0000\u0000st\u0005\u0017\u0000\u0000t\u0007\u0001\u0000"+
-		"\u0000\u0000uv\u0005\'\u0000\u0000v\t\u0001\u0000\u0000\u0000wx\u0005"+
+		"\u0000\u0000uv\u0005\u0004\u0000\u0000v\t\u0001\u0000\u0000\u0000wx\u0005"+
 		"\t\u0000\u0000xy\u0005\u0004\u0000\u0000yz\u0005\r\u0000\u0000z\u0081"+
 		"\u0003\u0002\u0001\u0000{|\u0005\u001d\u0000\u0000|}\u0005\u0004\u0000"+
 		"\u0000}~\u0005\r\u0000\u0000~\u0080\u0003\u0002\u0001\u0000\u007f{\u0001"+

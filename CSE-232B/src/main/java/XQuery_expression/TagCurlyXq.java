@@ -25,13 +25,13 @@ public class TagCurlyXq implements XQuery {
         //DocumentBuilder docBuilder = documentFactory.newDocumentBuilder();
         //Document doc = docBuilder.newDocument();
 
+        //System.out.println(tag + "  " + input.get(0).getTextContent());
+
         Node res_node = document.createElement(tag);
         //Node res_node = doc.createElement(tag);
 
         for (Node item : input) {
-            if (!Objects.isNull(item)) {
-                res_node.appendChild(item);
-            }
+            res_node.appendChild(item.cloneNode(true));
         }
 
         return Arrays.asList(res_node);

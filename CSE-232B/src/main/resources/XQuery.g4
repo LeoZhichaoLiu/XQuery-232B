@@ -20,7 +20,7 @@ joinClause: 'join' LPR xq COMMA xq COMMA attrList COMMA attrList RPR;
 
 attrList: LSB attrName (COMMA attrName)* RSB;
 
-attrName: ID;
+attrName: Var;
 
 forClause: For Var In xq (COMMA Var In xq)*;
 
@@ -78,4 +78,3 @@ ESCAPE
       ['"\\]
    )
 ;
-
