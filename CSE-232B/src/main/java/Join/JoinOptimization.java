@@ -53,7 +53,6 @@ public class JoinOptimization {
 
         // Now extract the where statement, and record all condition like "var1 = var2" or
         // "var1 eq var2", map them to the corresponding dependency_group (with integer 0 to size).
-        //Map <Integer, List<String[]>> attr_map = new HashMap<>();
         String where_statement = ctx.whereClause().cond().getText();
         setUpAttributes(attr_map, map_size, where_statement, dependency_group);
 
@@ -192,7 +191,6 @@ public class JoinOptimization {
             str = str.replaceAll(Pattern.quote("$") + var.substring(1),
                                        Matcher.quoteReplacement(convert_map.get(var)));
         }
-
         return str;
     }
 
