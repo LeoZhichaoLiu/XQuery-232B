@@ -13,6 +13,10 @@ public class SomeCond implements XQuery{
         this.isSatisified = isSatisified;
     }
 
+    @Override
+    public String getDocName() {
+        return null;
+    }
 
     @Override
     public XQueryKind getXQueryKind() {

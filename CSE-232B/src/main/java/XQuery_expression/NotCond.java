@@ -27,4 +27,9 @@ public class NotCond implements XQuery{
         }
         return null;
     }
+
+    @Override
+    public String getDocName() {
+        return cond.getDocName();
+    }
 }

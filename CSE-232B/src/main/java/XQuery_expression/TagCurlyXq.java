@@ -18,6 +18,11 @@ public class TagCurlyXq implements XQuery {
     }
 
     @Override
+    public String getDocName() {
+        return xq.getDocName();
+    }
+
+    @Override
     public List<Node> search (Document document) throws Exception {
 
         List<Node> input = xq.search(document);

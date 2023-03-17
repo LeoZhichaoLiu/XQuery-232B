@@ -22,4 +22,9 @@ public class ParaCond implements XQuery{
     public List<Node> search(Document document) throws Exception {
         return this.cond.search(document);
     }
+
+    @Override
+    public String getDocName() {
+        return cond.getDocName();
+    }
 }

@@ -19,6 +19,11 @@ public class ParaXq implements XQuery {
     }
 
     @Override
+    public String getDocName() {
+        return xq.getDocName();
+    }
+
+    @Override
     public XQueryKind getXQueryKind() {
         return XQueryKind.ParaXq;
     }

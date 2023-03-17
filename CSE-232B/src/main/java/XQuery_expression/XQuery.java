@@ -38,6 +38,8 @@ public interface XQuery {
 
     List<Node> search (Document document) throws Exception;
 
+    String getDocName ();
+
     default List<Node> searchDescendant (List<Node> input) {
         List<Node> res = new ArrayList<>();
         Queue<Node> queue = new LinkedList<>();

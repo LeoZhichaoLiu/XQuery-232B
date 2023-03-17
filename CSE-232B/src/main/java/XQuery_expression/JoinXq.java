@@ -22,6 +22,11 @@ public class JoinXq implements XQuery {
     }
 
     @Override
+    public String getDocName() {
+        return xq1.getDocName();
+    }
+
+    @Override
     public List<Node> search (Document document) throws Exception {
 
         List<Node> res = new ArrayList<>();

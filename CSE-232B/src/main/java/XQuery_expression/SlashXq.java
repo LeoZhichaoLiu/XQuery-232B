@@ -23,6 +23,11 @@ public class SlashXq implements XQuery {
     }
 
     @Override
+    public String getDocName() {
+        return xq.getDocName();
+    }
+
+    @Override
     public List<Node> search (Document document) throws Exception {
         List<Node> res1 = xq.search(document);
 

@@ -3,22 +3,21 @@ package XQuery_expression;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import java.util.*;
+import java.util.List;
 
-public class FunctionXq implements XQuery{
+public class LetXq implements XQuery {
 
-    final List<Node> function_list;
+    final XQuery xq;
     final String docName;
 
-    public FunctionXq (List<Node> input, String docName) {
-        function_list = input;
+    public LetXq (XQuery xq, String docName) {
+        this.xq = xq;
         this.docName = docName;
     }
 
     @Override
     public List<Node> search (Document document) throws Exception {
-
-        return function_list;
+        return xq.search(document);
     }
 
     @Override
@@ -28,6 +27,7 @@ public class FunctionXq implements XQuery{
 
     @Override
     public XQueryKind getXQueryKind() {
-        return XQueryKind.FunctionXq;
+        return XQueryKind.LetXq;
     }
+
 }

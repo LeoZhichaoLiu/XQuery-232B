@@ -7,9 +7,11 @@ import org.w3c.dom.Node;
 public class ApXq implements XQuery {
 
     final List<Node> ap_list;
+    final String name;
 
-    public ApXq(List<Node> input) {
+    public ApXq(List<Node> input, String name) {
         ap_list = input;
+        this.name = name;
     }
 
     @Override
@@ -21,6 +23,11 @@ public class ApXq implements XQuery {
         }
         return res;
 
+    }
+
+    @Override
+    public String getDocName() {
+        return name;
     }
 
     @Override

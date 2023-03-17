@@ -13,6 +13,11 @@ public class StrXq implements XQuery {
     }
 
     @Override
+    public String getDocName() {
+        return null;
+    }
+
+    @Override
     public List<Node> search (Document document) throws Exception {
 
         List<Node> res = new ArrayList<>();

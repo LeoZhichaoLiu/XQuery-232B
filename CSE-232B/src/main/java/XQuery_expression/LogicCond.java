@@ -21,6 +21,11 @@ public class LogicCond implements XQuery {
     }
 
     @Override
+    public String getDocName() {
+        return cond1.getDocName();
+    }
+
+    @Override
     public XQueryKind getXQueryKind() {
         return XQueryKind.LogicCond;
     }

@@ -21,7 +21,7 @@ import java.util.List;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class M3test {
+public class RewriteTest {
 
     public static void main(String[] args) throws Exception{
 
@@ -40,15 +40,12 @@ public class M3test {
         DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder document = documentFactory.newDocumentBuilder();
 
-        //String join_query = JoinRewrite(query, document);
-        //System.out.println (join_query);
-        long start = System.currentTimeMillis();
-        List<Node> res = Search(query, document);
-        long end = System.currentTimeMillis();
+        String join_query = JoinRewrite(query, document);
+        System.out.println (join_query);
 
-        System.out.println("Duration time for query is:" + (end-start));
-
-        convert2XML(res, outputFileName);
+        try (PrintStream out = new PrintStream(new FileOutputStream(outputFileName))) {
+            out.print(join_query);
+        }
     }
 
     public static String JoinRewrite (String query, DocumentBuilder documentBuilder) throws Exception {
@@ -73,22 +70,13 @@ public class M3test {
         XQueryParser parser = new XQueryParser(tokens);
         ParserRuleContext tree = parser.xq();
 
-        Document temp_document = documentBuilder.newDocument();
-        XQueryBuilder temp_xqueryBuilder = new XQueryBuilder(temp_document);
-        XQuery temp_root = temp_xqueryBuilder.visit(tree);
-
-        String fileName = temp_root.getDocName();
-        System.out.println(fileName);
-        if (fileName == null) {
-            fileName = "j_caesar_M3.xml";
-        }
-
-        File inputStream = new File(fileName);
+        //Document document = documentBuilder.newDocument();
+        File inputStream = new File("j_caesar.xml");
         Document document = documentBuilder.parse(inputStream);
 
         XQueryBuilder xqueryBuilder = new XQueryBuilder(document);
 
-        XQuery root = xqueryBuilder.visit(tree);
+        final XQuery root = xqueryBuilder.visit(tree);
 
         return root.search(document);
     }
@@ -123,4 +111,3 @@ public class M3test {
     }
 
 }
-

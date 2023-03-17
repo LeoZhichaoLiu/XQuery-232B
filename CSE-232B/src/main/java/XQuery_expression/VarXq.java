@@ -18,6 +18,11 @@ public class VarXq implements XQuery {
     }
 
     @Override
+    public String getDocName() {
+        return null;
+    }
+
+    @Override
     public XQueryKind getXQueryKind() {
         return XQueryKind.VarXq;
     }

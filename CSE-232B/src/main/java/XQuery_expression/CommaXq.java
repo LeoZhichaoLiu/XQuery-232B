@@ -25,6 +25,11 @@ public class CommaXq implements XQuery {
     }
 
     @Override
+    public String getDocName() {
+        return xq1.getDocName();
+    }
+
+    @Override
     public XQueryKind getXQueryKind() {
         return XQueryKind.CommaXq;
     }

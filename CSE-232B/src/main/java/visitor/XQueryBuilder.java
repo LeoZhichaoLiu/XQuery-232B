@@ -75,13 +75,16 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
     @Override
     public XQuery visitApXq(XQueryParser.ApXqContext ctx) {
         List<Node> res = new ArrayList<>();
+        String fileName = null;
         //System.out.println("Enter Ap!!!");
         try {
             res = Search(ctx.ap().getText(), this.docbuilder);
+            String origin_fileName = ctx.ap().docName().STRING().getText();
+            fileName = origin_fileName.substring(1, origin_fileName.length()-1);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ApXq(res);
+        return new ApXq(res, fileName);
     }
 
     @Override
@@ -116,6 +119,7 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
     public XQuery visitLetXq(XQueryParser.LetXqContext ctx) {
 
         Map<String, List<Node>> restore = new HashMap<>(map);
+        String docName = visit(ctx.letClause().xq(0)).getDocName();
 
         // For letXq xQuery, we first visit its letClause to update map, then return xq
         visit(ctx.letClause());
@@ -123,7 +127,7 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
 
         // We need to return to original map after
         map = restore;
-        return res;
+        return new LetXq(res, docName);
     }
 
 
@@ -131,6 +135,7 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
     public XQuery visitFunctionXq(XQueryParser.FunctionXqContext ctx) {
 
         List<Node> res = new ArrayList<>();
+        String docName = visit(ctx.forClause().xq(0)).getDocName();
 
         try {
             // We use helper function to implement recursion on the whole functionXq, the
@@ -141,7 +146,7 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
             e.printStackTrace();
         }
 
-        return new FunctionXq(res);
+        return new FunctionXq(res, docName);
     }
 
 

@@ -21,6 +21,11 @@ public class CompareCond implements XQuery {
         this.xq2 = xq2;
     }
 
+    @Override
+    public String getDocName() {
+        return xq1.getDocName();
+    }
+
 
     @Override
     public XQueryKind getXQueryKind() {
