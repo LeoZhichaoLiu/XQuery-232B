@@ -22,7 +22,6 @@ public class ApXq implements XQuery {
             //res.add(node);
         }
         return res;
-
     }
 
     @Override

@@ -46,7 +46,7 @@ public class M3test {
         List<Node> res = Search(query, document);
         long end = System.currentTimeMillis();
 
-        System.out.println("Duration time for query is:" + (end-start));
+        System.out.println("Duration time for query is: " + (end-start));
 
         convert2XML(res, outputFileName);
     }
