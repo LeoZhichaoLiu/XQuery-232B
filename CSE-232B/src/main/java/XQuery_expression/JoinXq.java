@@ -34,10 +34,6 @@ public class JoinXq implements XQuery {
         List<Node> res2 = xq2.search(document);
         Map<String, List<Node>> hash_table = new HashMap<>();
 
-        TransformerFactory tfFactory = TransformerFactory.newInstance();
-        Transformer tf = tfFactory.newTransformer();
-        tf.setOutputProperty(OutputKeys.INDENT, "yes");
-
         // If any one of the attribute list is empty, simply put all combinations into res
         if (attrList1.size() == 0 || attrList2.size() == 0) {
             for (Node node1 : res1) {
@@ -63,7 +59,7 @@ public class JoinXq implements XQuery {
 
         // put xq1's result into hash_table with arrtList1's standard
         for (Node node : res1) {
-            String hash_key = calculateKey(node, attrList1, tf);
+            String hash_key = calculateKey(node, attrList1);
 
             //System.out.println(hash_key);
             if (!hash_table.containsKey(hash_key)) {
@@ -77,15 +73,15 @@ public class JoinXq implements XQuery {
         }
 
         //System.out.println(hash_table.size());
-        for (String item : hash_table.keySet()) {
+        //for (String item : hash_table.keySet()) {
             //System.out.println(item);
-        }
+        //}
 
         // Then search xq2's result, combine every matching results with matched xq1
         for (Node node : res2) {
 
             // For each xq2, try to calculate its hash_key, find its matched xq1, and put them into tuple tag.
-            String hash_key = calculateKey(node, attrList2, tf);
+            String hash_key = calculateKey(node, attrList2);
             //System.out.println(hash_key);
 
             // Use hash_table (which record xq1's information) to find the match xq1 with each xq2
@@ -118,7 +114,7 @@ public class JoinXq implements XQuery {
      * For each node, try to extract all of the children with same attribute names, and
      * transfer to string for matching (in hashtable)
      */
-    public String calculateKey (Node node, List<String> attrList, Transformer tf) throws Exception {
+    public String calculateKey (Node node, List<String> attrList) throws Exception {
 
         NodeList child_list = node.getChildNodes();
         Map<String, Node> str_node_map  = new HashMap<>();

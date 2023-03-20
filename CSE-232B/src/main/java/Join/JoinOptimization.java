@@ -206,20 +206,20 @@ public class JoinOptimization {
         sb.insert (0, "join (");
         sb.append (id_statement + "[");
         for (int i = 0; i < size-1; i++) {
-            sb.append(left_list.get(i));
+            sb.append(left_list.get(i).substring(1));
             sb.append(",");
         }
         if (size > 0) {
-            sb.append(left_list.get(size - 1));
+            sb.append(left_list.get(size - 1).substring(1));
         }
 
         sb.append ("],[");
         for (int i = 0; i < size-1; i++) {
-            sb.append(right_list.get(i));
+            sb.append(right_list.get(i).substring(1));
             sb.append(",");
         }
         if (size > 0) {
-            sb.append(right_list.get(size - 1));
+            sb.append(right_list.get(size - 1).substring(1));
         }
         sb.append ("]\n");
         sb.append ("),\n");

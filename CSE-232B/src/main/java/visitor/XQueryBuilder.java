@@ -48,12 +48,12 @@ public class XQueryBuilder extends XQueryBaseVisitor<XQuery> {
         List<String> attrList1 = new ArrayList<>();
         List<String> attrList2 = new ArrayList<>();
 
-        for (int i = 0; i < ctx.attrList(0).attrName().size(); i++) {
-            attrList1.add(ctx.attrList(0).attrName(i).Var().getText());
+        for (int i = 0; i < ctx.attrList(0).attriName().size(); i++) {
+            attrList1.add('$'+ctx.attrList(0).attriName(i).ID().getText());
         }
 
-        for (int i = 0; i < ctx.attrList(1).attrName().size(); i++) {
-            attrList2.add(ctx.attrList(1).attrName(i).Var().getText());
+        for (int i = 0; i < ctx.attrList(1).attriName().size(); i++) {
+            attrList2.add('$'+ctx.attrList(1).attriName(i).ID().getText());
         }
 
         return new JoinXq(first, second, attrList1, attrList2);

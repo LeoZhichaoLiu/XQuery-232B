@@ -161,15 +161,15 @@ public interface XQueryListener extends ParseTreeListener {
 	 */
 	void exitAttrList(XQueryParser.AttrListContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link XQueryParser#attrName}.
+	 * Enter a parse tree produced by {@link XQueryParser#attriName}.
 	 * @param ctx the parse tree
 	 */
-	void enterAttrName(XQueryParser.AttrNameContext ctx);
+	void enterAttriName(XQueryParser.AttriNameContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link XQueryParser#attrName}.
+	 * Exit a parse tree produced by {@link XQueryParser#attriName}.
 	 * @param ctx the parse tree
 	 */
-	void exitAttrName(XQueryParser.AttrNameContext ctx);
+	void exitAttriName(XQueryParser.AttriNameContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link XQueryParser#forClause}.
 	 * @param ctx the parse tree
@@ -544,6 +544,16 @@ public interface XQueryListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTagName(XQueryParser.TagNameContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link XQueryParser#attrName}.
+	 * @param ctx the parse tree
+	 */
+	void enterAttrName(XQueryParser.AttrNameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link XQueryParser#attrName}.
+	 * @param ctx the parse tree
+	 */
+	void exitAttrName(XQueryParser.AttrNameContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link XQueryParser#comp}.
 	 * @param ctx the parse tree

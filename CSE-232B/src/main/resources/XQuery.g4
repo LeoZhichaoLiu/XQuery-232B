@@ -9,7 +9,7 @@ parse: xq+;
 
 /* Rules */
 xq: Var #VarXq | stringConstant #StrXq | ap #ApXq
-    | LPR xq RPR #ParaXq | xq COMMA xq #CommaXq | xq slash rp #SlashXq
+    | LPR xq RPR #ParaXq | xq slash rp #SlashXq | xq COMMA xq #CommaXq
     | LTag tagName1 RTag LCurly xq RCurly LTag SSLASH tagName2 RTag #TagCurlyXq
     | forClause (letClause)? (whereClause)? returnClause #FunctionXq
     | letClause xq #LetXq
@@ -18,9 +18,9 @@ xq: Var #VarXq | stringConstant #StrXq | ap #ApXq
 /* new definition for join clause */
 joinClause: 'join' LPR xq COMMA xq COMMA attrList COMMA attrList RPR;
 
-attrList: LSB attrName (COMMA attrName)* RSB;
+attrList: LSB attriName (COMMA attriName)* RSB;
 
-attrName: Var;
+attriName: ID;
 
 forClause: For Var In xq (COMMA Var In xq)*;
 

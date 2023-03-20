@@ -19,8 +19,14 @@ public class CommaXq implements XQuery {
         List<Node> res = new ArrayList<>();
         List<Node> res1 = xq1.search(document);
         List<Node> res2 = xq2.search(document);
-        res.addAll(res1);
-        res.addAll(res2);
+        for (Node node : res1) {
+            res.add (node.cloneNode(true));
+        }
+
+        for (Node node : res2) {
+            res.add (node.cloneNode(true));
+        }
+
         return res;
     }
 

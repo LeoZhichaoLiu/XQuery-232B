@@ -175,13 +175,13 @@ public class XQueryBaseListener implements XQueryListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAttrName(XQueryParser.AttrNameContext ctx) { }
+	@Override public void enterAttriName(XQueryParser.AttriNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAttrName(XQueryParser.AttrNameContext ctx) { }
+	@Override public void exitAttriName(XQueryParser.AttriNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -578,6 +578,18 @@ public class XQueryBaseListener implements XQueryListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTagName(XQueryParser.TagNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAttrName(XQueryParser.AttrNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAttrName(XQueryParser.AttrNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
